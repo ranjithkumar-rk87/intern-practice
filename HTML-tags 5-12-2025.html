@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML-tags 5-12-2025</title>
+</head>
+<body>
+    <h1>Heading 1</h1> <p>- main heading , Biggest and most important heading</p>
+    <h2>Heading 2</h2> <p>- Section Heading and Second level heading</p>
+    <h3>Heading 3</h3> <p>- Sub-section Heading and third level heading</p>
+    <h4>Heading 4</h4> <p>- Smaller Sub-section</p>
+    <h5>Heading 5</h5> <p>- Very Small Heading</p>
+    <h6>Heading 6</h6> <p>- smallest heading</p>
+
+    <p>Paragraph Tag</p> <p>- Displays a block of text</p>
+    <b>bold text</b> <p>- make the text bold</p>
+    <i>italic</i> <p>- make the text italic format</p>
+    <strong>Strong text</strong> <p>- important text</p>
+    <code>computer code</code> <P>- Programming code</P>
+    <p>x<sup>2</sup></p> <p>- it is superscript text appears above the normal line used for math</p>
+    <p>CO<sub>2</sub></body></p> <p>- it is subscript text appears below the normal line used for Chemistry</p>
+    <em>Emphasized text</em> <p>- display emphasized text in italic by default</p>
+    <del>Delete</del><p>- display this text with a strikethrough</p>
+    <u>Underline</u><p>- displat this text with a underline</p>
+    <mark>mark text</mark><p>- Highlights important text</p>
+    <kbd>Keyboard text</kbd><P>- keyboard input used for keyboard shortcut</P>
+    <small>small text</small> <p>- smallest text</p>
+    <var>var tag used To show variable names in code or formulas</var>
+    <abbr title="hypertext markup language">HTML</abbr> <p>- it is used to abbreviation</p>
+    <time datetime="9:07">9:07</time><br> <p>represents a specific period in time</p>
+
+    <a href="https://google.com">Visit Google</a> <P>- a tag used for link to external websites, Email, Files, other pages</P>
+
+    <address>west street , S, thiruvenkidapuram Rajapalayam</address><p>- address tag used to contact information</p>
+
+
+
+    <img src="download.jpg" usemap="#worldMap" alt="map">
+
+    <p>- image tag used display image</p>
+
+<map name="worldMap">
+    <area shape="circle" coords="80,80,40" href="https://example.com">
+</map>
+<p>- define an image map, which is an image with clickable areas</p>
+<p>- The area tag is used inside an image map to define clickable areas on an image.</p>
+
+
+<blockquote>
+    "The best way to predict the future is to invent it."
+</blockquote> <p>- used to define a block of quoted text from another source and block level element</p>
+
+<pre>
+    ok
+    ok
+</pre> <P>- display preformatted text useful for Poems or structured text</P>
+
+<button>click me</button> <p>- used to create clickable buttons in HTML</p>
+
+
+<canvas id="myCanvas" width="300" height="200" style="border:1px solid #000;"></canvas><p>used to create a drawing area in a web page</p>
+
+<table>
+    <caption>Student Marks</caption>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Math</th>
+            <th>Science</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Ravi</td>
+            <td>85</td>
+            <td>90</td>
+        </tr>
+        <tr>
+            <td>Anita</td>
+            <td>78</td>
+            <td>88</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>- table -> tag defines the table element and All table content (rows, headers, body) must go inside</p>
+<p>- caption ->  tag defines the title or description of the table</p>
+<p>-thead -> groups header rows of the table</p>
+<p>- tr -> defines a row in the table</p>
+<p>- th -> defines a header cell in a table row</p>
+<p>- tbody -> groups the main content rows of the table.</p>
+<p>- td -> data cell in a table row</p>
+
+<hr>
+
+<p>- horizontal line</p>
+
+<ul>
+    <li>list 1</li>
+    <li>list 2</li>
+</ul>
+
+<p>- Creates a list with bullet points</p>
+<p>li -> means list</p>
+
+<ol>
+    <li>list 1</li>
+    <li>list 2</li>
+</ol>
+
+<p>- create a list with numbers</p>
+
+
+<dl>
+    <dt>term</dt>
+    <dd>description</dd>
+</dl>
+<p>- Defines a list of terms and their descriptions</p>
+
+<p>My favorite movie is <cite>marvel</cite>.</p> <p>- used to represent the title of a work</p>
+
+<data value="data">machine-readable data to human-readable text</data>
+
+<form method="post">
+    <input type="text" placeholder="Enter the name"><br>
+
+    <textarea cols="5" rows="3"></textarea>
+
+    <datalist id="ice-cream-flavors">
+    <option value="Chocolate"></option>
+    <option value="Coconut"></option>
+    <option value="Mint"></option>
+    <option value="Strawberry"></option>
+    <option value="Vanilla"></option>
+    </datalist>
+
+</form>
+
+<p>- form tag used for collect user input in a webpage and send that data to a server for processing</p>
+<p>- interactive form fields that allow users to enter or select data</p>
+<p>- textarea used for user message like comments </p>
+<p>- datalist -> Showing dropdown suggestions while typing</p>
+<div>div tag used for Grouping multiple HTML elements</div>
+
+<form>
+  <fieldset>
+    <legend>Personal Details</legend>
+
+    <label>Name:</label>
+    <input type="text">
+
+    <br><br>
+
+    <label>Age:</label>
+    <input type="number">
+  </fieldset>
+</form>
+
+<p>fieldset -> used for Grouping related inputs like address section, personal info</p>
+<p>legend -> Describes what the grouped form fields</p>
+
+<figure>
+  <img src="download.jpg" alt="html" />
+  <figcaption> HTML</figcaption>
+</figure>
+
+<p>figure tag is used to wrap or group visual or media content</p>
+<p>figcation -> tag provides a caption or description for the media placed inside</p>
+
+<header> header -> Represents the top section of a page or a section. Usually contains logo, navigation, headings</header>
+<nav>nav-> Used for navigation menus</nav>
+<main>main-> Contains the main content of the webpage</main>
+<section>section -> Represents a section of related content</section>
+<article>article -> Used for independent, self-contained content like blogs, news articles, posts, reviews</article>
+<aside>aside -> Represents side content, like a sidebar, ads, related links</aside>
+<footer>footer-> Represents the bottom section of a page or section like contact info, social links</footer>
+
+
+</body>
+</html>
