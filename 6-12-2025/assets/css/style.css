@@ -1,0 +1,111 @@
+/* universal selector  */
+*{
+   background-color: gold;
+}
+
+/* Element/type selector  */
+h1{
+    color: blue;
+}
+
+/* class selector  */
+.h2{
+    color: red;
+}
+
+/* ID selector  */
+#h3{
+    color: green;
+}
+
+/* &nesting  selector  */
+.welcome{
+  &#hello{
+    color:green;
+    background-color:pink;
+  }
+}
+
+ol {
+  list-style-type: upper-alpha;
+  color: darkblue;
+}
+
+:is(ol, ul, menu:unsupported) :is(ol, ul) {
+  color: green;
+}
+
+:is(ol, ul) :is(ol, ul) ol {
+  list-style-type: lower-greek;
+  color: chocolate;
+}
+:is(ol) :is(ul) ul{
+  color:black;
+}
+
+/* attribute  selector  */
+
+a[title] {
+  color: purple;
+}
+/*Any <a> that has a title="" attribute becomes purple*/
+
+a[href="https://example.org"] {
+  color: green;
+}
+
+/* Must match exactly — full URL. */
+
+a[href*="example"] {
+  font-size: 2em;
+}
+/* *= = contains anywhere in the value*/
+
+a[href$=".org" i] {
+  font-style: italic;
+}
+
+/*     $= = ends with the value
+i = ignore-case (ORG / org / Org all match) */
+
+
+a[class~="logo"] {
+  padding: 10px;
+}
+
+/* ~= = matches whole word in space-separated class list*/
+
+/* selector list use (,) separater */
+span,
+div {
+  border: red 2px solid;
+}
+
+/* box model */
+.box {
+  width: 200px;
+  padding: 20px;
+  border: 5px solid red;
+  margin: 10px;
+  box-sizing: border-box; /*browser calculates width and height of an elemen*/
+}
+
+
+/* Next Sibling Combinator */
+h4 + p {
+  color: blue;
+}
+
+/*The subsequent-sibling combinator selects all elements that are next siblings of a specified elemen*/
+h4 ~ p{
+    background-color: red;
+}
+
+
+
+
+
+
+
+
+
