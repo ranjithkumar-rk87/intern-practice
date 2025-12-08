@@ -78,7 +78,7 @@ a[class~="logo"] {
 /* selector list use (,) separater */
 span,
 div {
-  border: red 2px solid;
+  border: 2px solid red;
 }
 
 /* box model */
