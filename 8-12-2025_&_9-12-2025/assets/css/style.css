@@ -249,6 +249,8 @@ ul{
   width: 300px;
   word-break: break-all;
 }
+
+/*vertical align */
 .logo-1 {
   vertical-align: baseline;
 }
@@ -277,19 +279,21 @@ ul{
   background: #1abc9c;
   transform: scale(1.1);
 }
-
+/*text align & text decoration*/
 .paragraph-1{
   text-align: start;
 }
 .paragraph-2{
   text-align: center;
 }
+
 .paragraph-3{
   text-align: end;
   text-decoration-line: underline;
   text-decoration-style: wavy;
   text-decoration-color: red;
 }
+/*scrollbar*/
 .scroller {
   width: 300px;
   height: 100px;
@@ -299,6 +303,7 @@ ul{
   scrollbar-width: thin;
 }
 
+/* position */
 .static-box {
   position: static;
   background: lightblue;
