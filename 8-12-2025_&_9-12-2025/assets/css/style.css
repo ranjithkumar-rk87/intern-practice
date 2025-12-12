@@ -108,7 +108,7 @@ nav ul li a:hover {
 /* background*/
 .box{
 
-    background-image: url("../image/common/bg.jpg");
+    background-image: url("../image/common/background.jpg");
     background-repeat: no-repeat ;
     background-size: cover;   
     background-position: center;
@@ -320,7 +320,7 @@ ul{
   width: 300px;
   height: 150px;
   background: #d9eaff;
-  margin-top: 20px;
+  margin: 20px 0px;
 }
 
 .child {
@@ -341,7 +341,64 @@ ul{
   border-radius: 8px;
 }
 
+/* 10-12-2025 */
 
+.footer {
+  background: #222;
+  color: #ddd;
+  text-align: center;
+  padding: 20px;
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: none;
+  padding: 0 8px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* resize properties*/
+.resize-vertical {
+  width: 300px;
+  height: 120px;
+  resize: vertical;
+  overflow: auto;
+}
+.resize-horizontal {
+  width: 300px;
+  height: 120px;
+  resize: horizontal;
+  overflow: auto;
+}
+.resize-both {
+  width: 300px;
+  height: 120px;
+  resize: both;
+  overflow: auto;
+}
+
+.rotate-box-container {
+    height: 100vh;        /* full screen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f3f3f3;
+    font-family: Arial, sans-serif;
+  }
+
+  .rotate-box {
+    width: 150px;
+    height: 150px;
+    background: #3498db;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    rotate: 30deg;
+  }
 
 
 
