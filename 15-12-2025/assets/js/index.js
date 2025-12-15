@@ -80,3 +80,117 @@
     window.addEventListener("scroll", () => {
       console.log("Page Scrolling");
     });
+
+
+    let message="Hello";
+    alert(message);
+
+    let name='Ranjith'
+    console.log(`Hello ${name}`);
+    console.log(`result is ${2+2}`);
+
+    let isGreater=4 >3;
+    console.log(isGreater);
+
+    let age;
+    console.log(age);
+
+    console.log(typeof 10);
+    
+    age=prompt("how old are you?",20);
+    console.log("your age is ",age)
+
+    let human=confirm("are you human?");
+    console.log(human);
+
+    let number=2;
+    console.log(typeof number);
+    number=String(number);
+    console.log(typeof number);
+
+
+    let x=10, y=2;
+    console.log("x-y",x-y);
+    console.log("exponentiation",2 ** 3);
+
+    let counter=0;
+    console.log(counter++);
+    console.log(++counter);
+
+    let voter_age = 18;
+
+    if (voter_age >= 18) {
+    console.log("You are eligible to vote");
+    }else {
+    console.log("Not eligible");
+    }
+
+    let mark = 75;
+
+    if (mark >= 90) {
+    console.log("Grade A");
+    } else if (mark >= 75) {
+    console.log("Grade B");
+    } else if (mark >= 50) {
+    console.log("Grade C");
+    } else {
+    console.log("Fail");
+    }
+
+    let day = 3;
+
+    switch (day) {
+    case 1:
+        console.log("Monday");
+        break;
+    case 2:
+        console.log("Tuesday");
+        break;
+    case 3:
+        console.log("Wednesday");
+        break;
+    default:
+        console.log("Invalid day");
+    }
+
+    console.log(1 || 0);
+
+    let user;
+    console.log(user ?? "Anonymous");
+
+
+    let i=0;
+    while(i<3){
+        console.log(i);
+        i++;
+    }
+
+    let j = 0;
+    do {
+    console.log( j );
+    j++;
+    } while (j < 3);
+
+
+    for (let k = 0; k < 3; k++) {
+        console.log(k);
+    }
+
+    function showMessage() {
+    alert( 'Hello everyone!' );
+    }
+
+showMessage();
+showMessage();
+
+    function sayHii(){
+        console.log("HII");
+    }
+    test=sayHii;
+
+    test();
+
+    const add = (a, b) => a + b;
+
+    console.log(add(5, 3));
+
