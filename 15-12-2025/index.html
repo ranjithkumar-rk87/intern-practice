@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript</title>
+    <style>
+        *{
+            margin-bottom: 20px;
+        }
+         .box {
+            width: 150px;
+            height: 100px;
+            background: skyblue;
+            margin: 10px 0;
+            text-align: center;
+            line-height: 100px;
+            cursor: pointer;
+        }
+        .drag {
+            background: orange;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="btn">click me</button>
+    <button id="dblClickBtn">Double Click</button>
+
+    <div id="box"><p>Mouse Over Me</p></div>
+
+    <input type="text" id="keyInput" placeholder="Type here"><br>
+
+    <select id="selectBox">
+        <option value="">Select</option>
+        <option value="HTML">HTML</option>
+        <option value="CSS">CSS</option>
+        <option value="JS">JavaScript</option>
+    </select>
+
+    <div id="mouseBox" class="box">Mouse Events</div>
+
+    <input id="focusInput" placeholder="Focus / Blur"><br>
+
+    <input id="clipInput" value="Copy Me">
+
+    <div id="dragBox" class="box drag" draggable="true">Drag Me</div>
+    <div id="dropBox" class="box">Drop Here</div>
+
+    <video id="video" width="250" controls>
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    </video>
+
+
+    <script src="./assets/js/index.js"></script>
+    
+</body>
+</html>
