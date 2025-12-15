@@ -194,3 +194,7 @@ showMessage();
 
     console.log(add(5, 3));
 
+    const sayHello = () => console.log("Hello");
+    sayHello();
+
+
