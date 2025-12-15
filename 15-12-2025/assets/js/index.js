@@ -113,6 +113,40 @@
     console.log("x-y",x-y);
     console.log("exponentiation",2 ** 3);
 
+    console.log(2+2+'1');
+    console.log('1'+2+2);
+
+    console.log("Absolute value is: " + Math.abs(-10));
+    console.log("Rounded value is: " + Math.round(4.5));
+    console.log("Floor value of is: " + Math.floor(4.5));
+    console.log("Ceil value is: " + Math.ceil(4.2));
+    console.log("pow is: " + Math.pow(2, 3));
+    console.log("Minimum is: " + Math.min(1, 3, 4));
+    console.log("Maximum  is: " + Math.max(10, 1, 2));
+    console.log("random is"+ Math.random())
+
+
+    let str = "Hello";
+    console.log("string length",str.length);
+    console.log("uppercase",str.toUpperCase());
+    console.log("lowercase",str.toLowerCase());
+    let str1 = "   Hello   ";
+    console.log(str1.trim());
+
+    let str2 = "Hello World";
+    console.log(str2.replace("World", "JS"));
+
+    let str3 = "JavaScript";
+
+    console.log("include ",str3.includes("Script"));
+    console.log("startwith",str3.startsWith("Java"));
+    console.log("endwith",str3.endsWith("Script"));
+
+    
+
+
+
+
     let counter=0;
     console.log(counter++);
     console.log(++counter);
