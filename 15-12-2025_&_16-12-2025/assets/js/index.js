@@ -89,6 +89,66 @@
     console.log(`Hello ${name}`);
     console.log(`result is ${2+2}`);
 
+    let n = 1.23456;
+
+    console.log( n.toFixed(2) );
+    console.log( typeof 0 );
+    console.log(Number("123"));
+    console.log("Hexadecimal ", 0xff );
+    let bin = 0b11111111;
+    let octal = 0o377;
+
+    console.log( bin == octal );
+    console.log( "Widget with id".includes("Widget") );
+
+
+    let fruits = ["Apple", "Orange", "Plum"];
+    fruits[2] = 'Pear'; 
+    console.log(fruits);
+
+    let matrix = [
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9]
+    ];
+
+    console.log( matrix[0][1] );
+
+    let arr1 = [10, 20, 50];
+    arr1.splice(2, 0, 30, 40);
+    console.log(arr1);
+
+
+    let map = new Map();
+
+    map.set('1', 'str1');
+    map.set(1, 'num1');
+    map.set(true, 'bool1');
+
+    console.log( map.get(1));
+    console.log( map.get('1'));
+    console.log("map size", map.size );
+
+
+    let set = new Set();
+    set.add(10);
+    set.add(20);
+    set.add(10);
+    console.log(set);
+    console.log(set.has(10));
+
+    set.delete(20);
+    console.log(set);
+
+    console.log(set.size);
+
+    set.clear();
+    console.log(set); 
+
+    
+
+
+
     let isGreater=4 >3;
     console.log(isGreater);
 
@@ -171,7 +231,7 @@
     console.log(arr[0]);
     console.log(arr[2]);
 
-    console.log("array index ",arr[arr.length - 1]);
+    console.log("array last value ",arr[arr.length - 1]);
     console.log(arr.at(-1));
 
     console.log("array length "+arr.length);
@@ -385,6 +445,11 @@
 
     getUsers();
 
+    fetch("https://jsonplaceholder.typicode.com/posts/1")
+      .then(res => res.json())
+      .then(data => console.log(data));
+
+
     fetch("https://jsonplaceholder.typicode.com/posts", {
       method: "POST",
       headers: {
@@ -426,6 +491,8 @@
         console.log("Deleted successfully");
       }
     });
+
+    
 
 
     function addTask() {
