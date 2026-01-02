@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@yield('title')</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">
+            BuySmart
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <!-- LEFT MENU -->
+            <ul class="navbar-nav me-auto">
+
+                @auth
+                    {{-- ADMIN NAVBAR --}}
+                    @if(Auth::user()->is_user == 1)
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.products.list')}}">Manage Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.orders.index') }}">Orders</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('listcustomer') }}">Users</a>
+                        </li>
+                    @endif
+
+                    {{-- NORMAL USER NAVBAR --}}
+                    @if(Auth::user()->is_user == 0)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('products.index')}}">Dashboard</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('orders.index') }}">My Orders</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('cart') }}">Cart</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('profile.edit') }}">Edit Profile</a>
+                        </li>
+                    @endif
+                @endauth
+
+            </ul>
+
+            <!-- RIGHT MENU -->
+            <ul class="navbar-nav ms-auto">
+
+                @guest
+                    <li class="nav-item">
+                        <a href="{{ route('login') }}" class="nav-link">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('register') }}" class="nav-link">Register</a>
+                    </li>
+                @endguest
+
+                @auth
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown">
+                            {{ Auth::user()->name }}
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a href="{{ route('changepassword') }}" class="dropdown-item text-danger">
+                                    Change Password
+                                </a>
+                              
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a href="/logout" class="dropdown-item text-danger">
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endauth
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    @yield('content')
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
