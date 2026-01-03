@@ -49,7 +49,7 @@
                 </form>
 
                 <div class="text-center mt-3">
-                    <a href="{{ route('login') }}">Already have account?</a>
+                    <a href="{{ route('login') }}" class="text-success">Already have account?</a>
                 </div>
 
             </div>

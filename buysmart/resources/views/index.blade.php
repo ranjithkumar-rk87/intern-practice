@@ -18,7 +18,7 @@
                     <p class="text-success">₹{{ $product->price }}</p>
 
                     <a href="{{ route('products.show',$product->id) }}"
-                       class="btn btn-primary btn-sm mt-auto">
+                       class="btn btn-danger btn-sm mt-auto">
                         Show Now
                     </a>
                 </div>

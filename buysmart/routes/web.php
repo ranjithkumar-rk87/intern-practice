@@ -58,10 +58,11 @@ Route::get('/change-password', function () {
 Route::middleware('auth')->group(function () {
 
 Route::get('/customer', [CustomerController::class, 'index'])->name('listcustomer');
+Route::post('/users/store', [CustomerController::class, 'store'])->name('users.store');
 Route::get('/users/{id}/edit', [CustomerController::class, 'edit'])->name('users.edit');
 Route::put('/users/{id}', [CustomerController::class, 'update'])->name('users.update');
 Route::delete('/users/{id}', [CustomerController::class, 'destroy'])->name('users.destroy');
-
+Route::get('/users/create', [CustomerController::class, 'create'])->name('users.create');
 });
 
 Route::middleware('auth')->group(function () {

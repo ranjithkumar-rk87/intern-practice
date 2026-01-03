@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\UserDetail;
+use Illuminate\Support\Facades\Hash;
 class CustomerController extends Controller
 {
     public function index()
@@ -19,6 +20,44 @@ class CustomerController extends Controller
 
         return view('admin.customer', compact('users'));
     }
+    public function create()
+    {
+        return view('admin.createcustomer');
+    }
+        public function store(Request $request)
+    {
+        // Validate input
+        $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+            'phone'    => 'nullable|digits:10',
+            'address'  => 'nullable|string',
+            'city'     => 'nullable|string',
+            'state'    => 'nullable|string',
+            'pincode'  => 'nullable|string',
+        ]);
+
+        // Create user
+        $user = User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
+            'is_user'  => 0,
+        ]);
+
+        // Create user detail
+        $user->detail()->create([
+            'phone'   => $request->phone,
+            'address' => $request->address,
+            'city'    => $request->city,
+            'state'   => $request->state,
+            'pincode' => $request->pincode,
+        ]);
+
+        return redirect()->route('listcustomer')->with('success', 'User created successfully.');
+    }
+
     public function edit($id)
     {
         $user = User::findOrFail($id);

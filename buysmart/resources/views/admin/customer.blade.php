@@ -8,7 +8,13 @@
         <div class="card shadow">
 
             <div class="card-header bg-dark text-white">
-                <h5 class="mb-0">Users List</h5>
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Users List</h5>
+
+                    <a href="{{ route('users.create') }}" class="btn btn-success btn-sm">
+                        + Create User
+                    </a>
+                </div>
             </div>
 
             <div class="card-body">

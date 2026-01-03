@@ -4,6 +4,9 @@
 
 @section('content')
 <div class="container">
+     <a href="{{ route('admin.products.list') }}" class="btn btn-secondary mb-3">
+        ← Back
+    </a>
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show col-md-6 mx-auto" role="alert">
