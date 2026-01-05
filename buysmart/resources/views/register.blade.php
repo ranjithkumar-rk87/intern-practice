@@ -22,31 +22,36 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('register') }}">
+                <form method="POST" action="{{ route('register') }}" id="registerForm">
                     @csrf
 
                     <div class="mb-3">
                         <label>Name</label>
-                        <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
+                        <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}">
+                        <small class="text-danger" id="nameError"></small>
                     </div>
 
                     <div class="mb-3">
                         <label>Email</label>
-                        <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
+                        <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}">
+                        <small class="text-danger" id="emailError"></small>
                     </div>
 
                     <div class="mb-3">
                         <label>Password</label>
-                        <input type="password" name="password" class="form-control" required>
+                        <input type="password" name="password" id="password" class="form-control">
+                        <small class="text-danger" id="passwordError"></small>
                     </div>
 
                     <div class="mb-3">
                         <label>Confirm Password</label>
-                        <input type="password" name="password_confirmation" class="form-control" required>
+                        <input type="password" name="password_confirmation" id="confirmPassword" class="form-control">
+                        <small class="text-danger" id="confirmPasswordError"></small>
                     </div>
 
                     <button class="btn btn-success w-100">Register</button>
                 </form>
+
 
                 <div class="text-center mt-3">
                     <a href="{{ route('login') }}" class="text-success">Already have account?</a>
@@ -56,4 +61,72 @@
         </div>
     </div>
 </div>
+
+<script>
+$(document).ready(function () {
+
+    $('#registerForm').submit(function (e) {
+        let valid = true;
+
+        $('small.text-danger').text('');
+        $('.form-control').removeClass('is-invalid');
+
+        let name = $('#name').val().trim();
+        let email = $('#email').val().trim();
+        let password = $('#password').val();
+        let confirmPassword = $('#confirmPassword').val();
+
+        // Name
+        if (name === '') {
+            $('#nameError').text('Name is required');
+            $('#name').addClass('is-invalid');
+            valid = false;
+        }
+
+        // Email
+        if (email === '') {
+            $('#emailError').text('Email is required');
+            $('#email').addClass('is-invalid');
+            valid = false;
+        } else if (!validateEmail(email)) {
+            $('#emailError').text('Enter a valid email');
+            $('#email').addClass('is-invalid');
+            valid = false;
+        }
+
+        // Password
+        if (password === '') {
+            $('#passwordError').text('Password is required');
+            $('#password').addClass('is-invalid');
+            valid = false;
+        } else if (password.length < 8) {
+            $('#passwordError').text('Password must be at least 8 characters');
+            $('#password').addClass('is-invalid');
+            valid = false;
+        }
+
+        // Confirm password
+        if (confirmPassword === '') {
+            $('#confirmPasswordError').text('Confirm password is required');
+            $('#confirmPassword').addClass('is-invalid');
+            valid = false;
+        } else if (password !== confirmPassword) {
+            $('#confirmPasswordError').text('Passwords do not match');
+            $('#confirmPassword').addClass('is-invalid');
+            valid = false;
+        }
+
+        if (!valid) {
+            e.preventDefault();
+        }
+    });
+
+    function validateEmail(email) {
+        let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
+
+});
+</script>
+
 @endsection

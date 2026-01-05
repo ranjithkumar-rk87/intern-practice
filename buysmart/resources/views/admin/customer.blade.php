@@ -26,8 +26,10 @@
                                 <th>S.NO</th>
                                 <th>Name</th>
                                 <th>Email</th>
+                                <th>Role</th>
                                 <th>Registered At</th>
-                                <th>Action</th>
+                                <th>Make Admin/user</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,8 +39,36 @@
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
+                                   <td>
+                                        @if($user->hasRole('admin'))
+                                            <span class="badge bg-primary">Admin</span>
+                                        @else
+                                            <span class="badge bg-secondary">User</span>
+                                        @endif
+                                    </td>
                                 <td>{{ $user->created_at->format('d M Y') }}</td>
-                                                              <td onclick="event.stopPropagation();">
+                                <td>
+                                @if(!$user->hasRole('admin'))
+                                    <form method="POST"
+                                        action="{{ route('make.admin', $user->id) }}"
+                                        onsubmit="return confirm('Are you sure you want to make this user an Admin?')">
+                                        @csrf
+                                        <button class="btn btn-success btn-sm">
+                                            Make Admin
+                                        </button>
+                                    </form>
+                                @else
+                                    <form method="POST"
+                                        action="{{ route('remove.admin', $user->id) }}"
+                                        onsubmit="return confirm('Remove admin role from this user?')">
+                                        @csrf
+                                        <button class="btn btn-warning btn-sm">
+                                            Remove Admin
+                                        </button>
+                                    </form>
+                                @endif
+                            </td>
+                                    <td onclick="event.stopPropagation();">
                                     <form action="{{ route('users.destroy', $user->id) }}"
                                           method="POST"
                                           onsubmit="return confirm('Are you sure you want to delete this user?');">

@@ -7,6 +7,31 @@
 <p>Status: {{ ucfirst($order->status) }}</p>
 <p>Total: ₹{{ $order->total_amount }}</p>
 
+@php $detail = $order->user->detail; @endphp
+
+<div class="card mb-3">
+    <div class="card-header fw-bold">
+        Delivery Address
+    </div>
+
+    <div class="card-body">
+        <p class="mb-1">
+            <strong>Name:</strong> {{ $order->user->name }}
+        </p>
+
+        <p class="mb-1">
+            <strong>Phone:</strong> {{ $detail->phone ?? 'N/A' }}
+        </p>
+
+        <p class="mb-0">
+            <strong>Address:</strong><br>
+            {{ $detail->address ?? 'N/A' }}<br>
+            {{ $detail->city ?? '' }},
+            {{ $detail->state ?? '' }} - {{ $detail->pincode ?? '' }}
+        </p>
+    </div>
+</div>
+
 <table class="table">
     <tr>
         <th>Product</th>

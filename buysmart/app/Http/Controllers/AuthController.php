@@ -24,12 +24,12 @@ class AuthController extends Controller
         'password' => 'required|min:8|confirmed'
     ]);
 
-    User::create([
+    $user=User::create([
         'name' => $request->name,
         'email' => $request->email,
         'password' => Hash::make($request->password),
-        'is_user' => 0 // default normal user
     ]);
+    $user->assignRole('user');
 
     return redirect('/login')->with('success', 'Registration successful. Please login.');
 }
@@ -47,7 +47,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($request->only('email', 'password'))) {
 
-            if (Auth::user()->is_user == 1) {
+           if (Auth::user()->hasRole('admin')) {
                 return redirect('/admin/dashboard');
             }
 
@@ -59,12 +59,12 @@ class AuthController extends Controller
 
     public function adminDashboard()
     {
-        if (!Auth::check() || Auth::user()->is_user != 1) {
+       if (!Auth::check() || !Auth::user()->hasRole('admin')) {
             abort(403);
         }
+
         $totalUsers = User::count();
-        $totalAdmins = User::where('is_user', 1)->count();
-        $totalNormalUsers = User::where('is_user', 0)->count();
+        $totalAdmins = User::role('admin')->count();
 
         $pendingOrders   = Order::where('status', 'pending')->count();
         $confirmedOrders = Order::where('status', 'confirmed')->count();
@@ -72,10 +72,12 @@ class AuthController extends Controller
 
         $totalRevenue = Order::where('status', 'delivered')->sum('total_amount');
 
+        $totalProducts = Product::count();
+
         return view('admin.dashboard', compact(
             'totalUsers',
             'totalAdmins',
-            'totalNormalUsers',
+            'totalProducts',
             'pendingOrders',
             'confirmedOrders',
             'deliveredOrders',

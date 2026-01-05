@@ -5,6 +5,7 @@
     <title>@yield('title')</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body class="bg-light">
 
@@ -24,43 +25,39 @@
             <!-- LEFT MENU -->
             <ul class="navbar-nav me-auto">
 
-                @auth
+            @auth
+                @hasrole('admin')
                     {{-- ADMIN NAVBAR --}}
-                    @if(Auth::user()->is_user == 1)
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin/dashboard">Dashboard</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.products.list') }}">Manage Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.orders.index') }}">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('listcustomer') }}">Users</a>
+                    </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.products.list')}}">Manage Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.orders.index') }}">Orders</a>
-                        </li>
+                @elseif(auth()->user()->hasRole('user'))
+                    {{-- USER NAVBAR --}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('products.index') }}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('orders.index') }}">My Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('cart') }}">Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('profile.edit') }}">Edit Profile</a>
+                    </li>
+                @endhasrole
+            @endauth
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('listcustomer') }}">Users</a>
-                        </li>
-                    @endif
-
-                    {{-- NORMAL USER NAVBAR --}}
-                    @if(Auth::user()->is_user == 0)
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('products.index')}}">Dashboard</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('orders.index') }}">My Orders</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cart') }}">Cart</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('profile.edit') }}">Edit Profile</a>
-                        </li>
-                    @endif
-                @endauth
 
             </ul>
 
@@ -85,12 +82,14 @@
 
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <a href="{{ route('changepassword') }}" class="dropdown-item text-danger">
+                                <a href="{{ route('changepassword') }}"
+                                   class="dropdown-item">
                                     Change Password
                                 </a>
-                              
                             </li>
+
                             <li><hr class="dropdown-divider"></li>
+
                             <li>
                                 <a href="/logout" class="dropdown-item text-danger">
                                     Logout
@@ -109,8 +108,6 @@
 <div class="container mt-5">
     @yield('content')
 </div>
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 

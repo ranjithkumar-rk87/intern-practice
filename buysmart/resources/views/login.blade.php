@@ -33,21 +33,24 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('login') }}" id="loginForm">
                     @csrf
 
                     <div class="mb-3">
                         <label>Email</label>
-                        <input type="email" name="email" class="form-control" required>
+                        <input type="email" name="email" id="email" class="form-control">
+                        <small class="text-danger" id="emailError"></small>
                     </div>
 
                     <div class="mb-3">
                         <label>Password</label>
-                        <input type="password" name="password" class="form-control" required>
+                        <input type="password" name="password" id="password" class="form-control">
+                        <small class="text-danger" id="passwordError"></small>
                     </div>
 
                     <button class="btn btn-success w-100">Login</button>
                 </form>
+
 
                 <div class="text-center mt-3">
                     <a href="{{ route('register') }}">Create account</a>
@@ -57,4 +60,53 @@
         </div>
     </div>
 </div>
+<script>
+$(document).ready(function () {
+
+    $('#loginForm').submit(function (e) {
+        let isValid = true;
+
+        $('#emailError').text('');
+        $('#passwordError').text('');
+        $('#email, #password').removeClass('is-invalid');
+
+        let email = $('#email').val().trim();
+        let password = $('#password').val().trim();
+
+        // Email
+        if (email === '') {
+            $('#emailError').text('Email is required');
+            $('#email').addClass('is-invalid');
+            isValid = false;
+        } else if (!validateEmail(email)) {
+            $('#emailError').text('Enter a valid email');
+            $('#email').addClass('is-invalid');
+            isValid = false;
+        }
+
+        // Password
+        if (password === '') {
+            $('#passwordError').text('Password is required');
+            $('#password').addClass('is-invalid');
+            isValid = false;
+        } else if (password.length < 8) {
+            $('#passwordError').text('Password must be at least 8 characters');
+            $('#password').addClass('is-invalid');
+            isValid = false;
+        }
+
+        if (!isValid) {
+            e.preventDefault();
+        }
+    });
+
+    function validateEmail(email) {
+        let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
+
+});
+</script>
+
+
 @endsection

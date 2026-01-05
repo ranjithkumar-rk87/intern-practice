@@ -29,6 +29,7 @@
         <tr>
             <th>Order ID</th>
             <th>Total</th>
+            <th>Qty</th>
             <th>Status</th>
             <th>Date</th>
             <th width="180">Action</th>
@@ -40,6 +41,14 @@
         <tr>
             <td>#{{ $order->id }}</td>
             <td>₹{{ $order->total_amount }}</td>
+            <td title="
+                @foreach($order->items as $item)
+                {{ $item->product->name }} × {{ $item->quantity }}
+                @endforeach
+                ">
+                {{ $order->items->sum('quantity') }}
+                </td>
+
             <td>
                 <span class="badge 
                     {{ $order->status == 'pending' ? 'bg-warning' : 

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
@@ -9,21 +8,28 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function addToCart($productId)
+    public function addToCart(Request $request,$productId)
     {
         $userId = Auth::id();
+
+        $quantity = $request->quantity ?? 1;
+
+        $product = Product::findOrFail($productId);
 
         $cart = Cart::where('user_id', $userId)
                     ->where('product_id', $productId)
                     ->first();
 
         if ($cart) {
-            $cart->increment('quantity');
+            if (($cart->quantity + $quantity) > $product->stock) {
+                return back()->with('error', 'Stock limit exceeded');
+            }
+            $cart->increment('quantity', $quantity);
         } else {
             Cart::create([
                 'user_id' => $userId,
                 'product_id' => $productId,
-                'quantity' => 1
+                'quantity' => $quantity
             ]);
         }
 
@@ -55,8 +61,15 @@ public function updateQty(Request $request, $id)
         ->where('user_id', auth()->id())
         ->firstOrFail();
 
+    $product = $cartItem->product;
+
     if ($request->action === 'increase') {
-        $cartItem->quantity += 1;
+
+        if ($cartItem->quantity < $product->stock) {
+            $cartItem->quantity += 1;
+        } else {
+            return back()->with('error', 'Only ' . $product->stock . ' items available in stock');
+        }
     }
 
     if ($request->action === 'decrease') {

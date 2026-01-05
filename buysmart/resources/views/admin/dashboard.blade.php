@@ -27,11 +27,11 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3 mb-3">
+      <div class="col-md-3 mb-3">
         <div class="card shadow-sm">
             <div class="card-body text-center">
-                <h5>Normal Users</h5>
-                <h2 class="text-warning">{{ $totalNormalUsers }}</h2>
+                <h5>Total Products</h5>
+                <h2 class="text-warning">{{ $totalProducts }}</h2>
             </div>
         </div>
     </div>

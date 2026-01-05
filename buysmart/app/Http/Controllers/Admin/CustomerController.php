@@ -12,18 +12,19 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        if (!Auth::check() || Auth::user()->is_user != 1) {
-            abort(403, 'Unauthorized');
-        }
+      if (!Auth::check() || !Auth::user()->hasRole('admin')) {
+        abort(403, 'Unauthorized');
+    }
 
-        $users = User::where('is_user', 0)->latest()->get();
+
+        $users = User::latest()->get();
 
         return view('admin.customer', compact('users'));
     }
     public function create()
     {
         return view('admin.createcustomer');
-    }
+    } 
         public function store(Request $request)
     {
         // Validate input
@@ -43,8 +44,9 @@ class CustomerController extends Controller
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
-            'is_user'  => 0,
         ]);
+        $user->assignRole('user');
+
 
         // Create user detail
         $user->detail()->create([
@@ -70,25 +72,30 @@ class CustomerController extends Controller
     $request->validate([
         'name' => 'required',
         'email' => 'required|email|unique:users,email,' . $user->id,
-        'is_user'  => 'required|in:0,1',
 
         'phone'    => 'nullable|digits:10',
         'address'  => 'nullable|string',
         'city'     => 'nullable|string',
         'state'    => 'nullable|string',
         'pincode'  => 'nullable|digits:6',
+
+        'role' => 'required|in:admin,user'
     ]);
 
-    $data = $request->only('name','email','is_user');
+    $data = $request->only('name','email');
 
     $user->update($data);
+
+      if (auth()->id() != $user->id) {
+        $user->syncRoles([$request->role]);
+    }
 
     UserDetail::updateOrCreate(
         ['user_id' => $user->id],
         $request->only('phone', 'address', 'city', 'state', 'pincode')
     );
 
-    return redirect()->route('admindashboard')->with('success','User updated');
+    return redirect()->route('listcustomer')->with('success','User updated');
 }
    public function destroy($id)
 {
@@ -97,5 +104,27 @@ class CustomerController extends Controller
 
     return redirect()->back()->with('success', 'User deleted successfully');
 }
+    public function makeAdmin($id)
+    {
+        $user = User::findOrFail($id);
 
+        if ($user->hasRole('admin')) {
+            return back()->with('error', 'User is already an admin');
+        }
+
+        $user->removeRole('user');
+        $user->assignRole('admin');
+
+        return back()->with('success', 'User promoted to Admin successfully');
+    }
+
+    public function removeAdmin($id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->removeRole('admin');
+        $user->assignRole('user');
+
+        return back()->with('success', 'Admin changed to User');
+    }
 }

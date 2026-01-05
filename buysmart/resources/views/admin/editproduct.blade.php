@@ -33,6 +33,17 @@
     </div>
 
     <div class="mb-3">
+    <label>Stock</label>
+    <input type="number"
+           name="stock"
+           value="{{ $product->stock }}"
+           class="form-control"
+           min="0"
+           required>
+    </div>
+
+
+    <div class="mb-3">
         <label>Image</label><br>
         <img src="{{ asset('storage/'.$product->image) }}"
              width="100" class="mb-2 rounded"><br>

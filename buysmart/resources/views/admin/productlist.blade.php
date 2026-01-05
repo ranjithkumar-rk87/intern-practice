@@ -25,6 +25,7 @@
                     <th>Image</th>
                     <th>Name</th>
                     <th>Price</th>
+                    <th>Stock</th>
                     <th width="200">Action</th>
                 </tr>
             </thead>
@@ -37,6 +38,16 @@
                     </td>
                     <td>{{ $product->name }}</td>
                     <td>₹{{ $product->price }}</td>
+                    <td>
+                        @if($product->stock == 0)
+                            <span class="badge bg-danger">Out of Stock</span>
+                        @else
+                            <span class="badge bg-success">
+                                 {{ $product->stock }}
+                            </span>
+                        @endif
+                    </td>
+
                     <td class="d-flex  gap-2">
 
                         <a href="{{ route('admin.products.edit', $product->id) }}"

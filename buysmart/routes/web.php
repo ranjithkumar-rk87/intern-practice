@@ -17,7 +17,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('products.show');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth','role:admin')->group(function () {
 Route::get('/create', [ProductController::class, 'create'])->name('admin.products.create');
 Route::post('/store', [ProductController::class, 'store'])->name('products.store');
 Route::get('/products', [ProductController::class, 'productList'])->name('admin.products.list');
@@ -42,8 +42,8 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth')->group(function () {
-
-Route::get('/admin/dashboard', [AuthController::class, 'adminDashboard'])->name('admindashboard');
+                                    // change /admin/dashboard
+Route::middleware('role:admin')->get('/dashboard', [AuthController::class, 'adminDashboard'])->name('admindashboard');
 });
 
 Route::get('/logout', [AuthController::class, 'logout']);
@@ -55,7 +55,7 @@ Route::get('/change-password', function () {
     return view('user.changepassword');
 })->middleware('auth')->name('password.form');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth','role:admin')->group(function () {
 
 Route::get('/customer', [CustomerController::class, 'index'])->name('listcustomer');
 Route::post('/users/store', [CustomerController::class, 'store'])->name('users.store');
@@ -63,18 +63,25 @@ Route::get('/users/{id}/edit', [CustomerController::class, 'edit'])->name('users
 Route::put('/users/{id}', [CustomerController::class, 'update'])->name('users.update');
 Route::delete('/users/{id}', [CustomerController::class, 'destroy'])->name('users.destroy');
 Route::get('/users/create', [CustomerController::class, 'create'])->name('users.create');
+Route::post('/admin/make-admin/{id}', [CustomerController::class, 'makeAdmin'])->name('make.admin');
+
+Route::post('/admin/remove-admin/{id}', [CustomerController::class, 'removeAdmin'])->name('remove.admin');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth','role:user')->group(function () {
 
 Route::get('/orders/{id}', [OrderController::class, 'usershow'])->name('orders.show');
 Route::get('/my-orders', [OrderController::class, 'index'])->name('orders.index');
 Route::post('/checkout', [OrderController::class, 'store'])->name('checkout');
-Route::post('/buy-now/{id}', [OrderController::class, 'buyNow'])->name('buy.now');
+Route::get('/buy-now/{id}', [OrderController::class, 'buyNow'])->name('buy.now');
 Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
+Route::get('/quantity/{product}', [OrderController::class, 'updateQty'])->name('quantity.update');
+
 });
 
-Route::middleware('auth')->group(function () {
+
+
+Route::middleware('auth','role:admin')->group(function () {
 
 Route::get('/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
 Route::get('/admin//orders/{id}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
