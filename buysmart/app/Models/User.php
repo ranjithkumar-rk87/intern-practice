@@ -60,6 +60,17 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserDetail::class);
     }
+        protected static function booted()
+    {
+        static::saved(function ($user) {
+            if (request()->has('detail')) {
+                $user->detail()->updateOrCreate(
+                    ['user_id' => $user->id],
+                    request()->input('detail')
+                );
+            }
+        });
+    }
 
 }
 

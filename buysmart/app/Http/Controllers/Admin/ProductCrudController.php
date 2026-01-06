@@ -38,12 +38,42 @@ class ProductCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // set columns from db columns.
+       // CRUD::setFromDb(); // set columns from db columns.
 
         /**
          * Columns can be defined using the fluent syntax:
          * - CRUD::column('price')->type('number');
          */
+
+        CRUD::addColumn([
+            'name' => 'image',
+            'label' => 'Image',
+            'type' => 'closure',
+            'function' => function ($entry) {
+                if ($entry->image) {
+                    return '<img src="'.asset('storage/'.$entry->image).'" height="60" width="60" style="object-fit:cover;">';
+                }
+                return '-';
+            },
+            'escaped' => false,
+        ]);
+
+
+        CRUD::addColumn([
+            'name' => 'name',
+            'type' => 'text',
+        ]);
+
+        CRUD::addColumn([
+            'name' => 'price',
+            'type' => 'number',
+            'suffix' => ' ₹',
+        ]);
+
+        CRUD::addColumn([
+            'name' => 'stock',
+            'type' => 'number',
+        ]);
     }
 
     /**
@@ -54,13 +84,53 @@ class ProductCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(ProductRequest::class);
-        CRUD::setFromDb(); // set fields from db columns.
+        // CRUD::setValidation(ProductRequest::class);
+        // CRUD::setFromDb(); // set fields from db columns.
 
         /**
          * Fields can be defined using the fluent syntax:
          * - CRUD::field('price')->type('number');
          */
+        CRUD::setValidation([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png',
+        ]);
+
+        CRUD::addField([
+            'name' => 'name',
+            'type' => 'text',
+            'label' => 'Product Name',
+        ]);
+
+        CRUD::addField([
+            'name' => 'description',
+            'type' => 'textarea',
+            'label' => 'Description',
+        ]);
+
+        CRUD::addField([
+            'name' => 'price',
+            'type' => 'number',
+            'attributes' => [
+                'step' => '0.01',
+            ],
+        ]);
+
+        CRUD::addField([
+            'name' => 'stock',
+            'type' => 'number',
+        ]);
+
+        CRUD::addField([
+            'name' => 'image',
+            'type' => 'upload',
+            'upload' => true,
+            'disk' => 'public',
+            'label' => 'Product Image',
+        ]);
+
     }
 
     /**

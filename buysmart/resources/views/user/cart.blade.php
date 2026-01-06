@@ -71,7 +71,7 @@
                                             class="form-control text-center"
                                             value="{{ $item->quantity }}"
                                             readonly
-                                            style="width:50px;">
+                                            class="width-50">
 
                                         <button type="submit" name="action" value="increase"
                                                 class="btn btn-outline-secondary btn-sm">+</button>

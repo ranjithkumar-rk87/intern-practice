@@ -10,8 +10,7 @@
             <div class="card h-100 shadow">
 
                 <img src="{{ asset('storage/'.$product->image) }}"
-                     class="card-img-top"
-                     style="height:200px;object-fit:cover;">
+                     class="card-img-top img-cover ">
 
                 <div class="card-body d-flex flex-column">
                     <h6>{{ $product->name }}</h6>

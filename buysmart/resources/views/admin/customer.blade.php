@@ -35,7 +35,7 @@
                         <tbody>
                          @foreach($users as $key => $user)
                             <tr onclick="window.location='{{ route('users.edit', $user->id) }}'"
-                                style="cursor:pointer;">
+                                class="cursor-pointer">
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>

@@ -18,8 +18,7 @@
         {{-- Product Image --}}
         <div class="col-md-6">
             <img src="{{ asset('storage/'.$product->image) }}"
-                 class="img-fluid rounded"
-                 style="max-height:400px; object-fit:contain;">
+                 class="img-fluid rounded img-contain">
         </div>
 
         {{-- Product Details --}}
@@ -36,7 +35,7 @@
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Quantity</label>
 
-                    <div class="input-group" style="max-width:160px;">
+                    <div class="input-group" class="width-160">
                         <button formaction="{{ route('quantity.update', $product->id) }}"
                                 name="action"
                                 value="decrease"

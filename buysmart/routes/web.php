@@ -63,8 +63,8 @@ Route::get('/users/{id}/edit', [CustomerController::class, 'edit'])->name('users
 Route::put('/users/{id}', [CustomerController::class, 'update'])->name('users.update');
 Route::delete('/users/{id}', [CustomerController::class, 'destroy'])->name('users.destroy');
 Route::get('/users/create', [CustomerController::class, 'create'])->name('users.create');
-Route::post('/admin/make-admin/{id}', [CustomerController::class, 'makeAdmin'])->name('make.admin');
 
+Route::post('/admin/make-admin/{id}', [CustomerController::class, 'makeAdmin'])->name('make.admin');
 Route::post('/admin/remove-admin/{id}', [CustomerController::class, 'removeAdmin'])->name('remove.admin');
 });
 
@@ -78,8 +78,6 @@ Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders
 Route::get('/quantity/{product}', [OrderController::class, 'updateQty'])->name('quantity.update');
 
 });
-
-
 
 Route::middleware('auth','role:admin')->group(function () {
 
