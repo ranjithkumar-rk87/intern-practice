@@ -47,7 +47,7 @@ class ProductCrudController extends CrudController
 
         CRUD::addColumn([
             'name' => 'image',
-            'label' => 'Image',
+            'label' => 'Product Image',
             'type' => 'closure',
             'function' => function ($entry) {
                 if ($entry->image) {
@@ -61,6 +61,7 @@ class ProductCrudController extends CrudController
 
         CRUD::addColumn([
             'name' => 'name',
+            'label'=>'Product Name',
             'type' => 'text',
         ]);
 
@@ -70,10 +71,20 @@ class ProductCrudController extends CrudController
             'suffix' => ' ₹',
         ]);
 
-        CRUD::addColumn([
+       CRUD::addColumn([
             'name' => 'stock',
-            'type' => 'number',
+            'label' => 'Stock',
+            'type' => 'closure',
+            'function' => function ($entry) {
+                if ($entry->stock == 0) {
+                    return '<span class="badge bg-danger text-white">Out of Stock</span>';
+                }
+
+                return '<span class="badge bg-success">'.$entry->stock.'</span>';
+            },
+            'escaped' => false,
         ]);
+
     }
 
     /**

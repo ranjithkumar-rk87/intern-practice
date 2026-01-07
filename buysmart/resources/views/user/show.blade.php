@@ -44,7 +44,7 @@
                         <input type="number"
                                name="quantity"
                                value="{{ old('quantity', 1) }}"
-                               class="form-control text-center"
+                               class="text-center qty"
                                readonly>
 
                         <button formaction="{{ route('quantity.update', $product->id) }}"

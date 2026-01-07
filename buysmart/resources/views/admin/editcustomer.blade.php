@@ -7,8 +7,8 @@
     <div class="col-md-6">
 
         <div class="card shadow">
-            <div class="card-header bg-dark text-white">
-                <h5 class="mb-0">Edit User</h5>
+            <div class="card-header bg-dark ">
+                <h5 class="mb-0 text-white">Edit User</h5>
             </div>
 
             <div class="card-body">

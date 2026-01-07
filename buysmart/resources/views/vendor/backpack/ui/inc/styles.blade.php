@@ -33,3 +33,4 @@
 @if (backpack_theme_config('vite_styles') && count(backpack_theme_config('vite_styles')))
     @vite(backpack_theme_config('vite_styles'))
 @endif
+<link rel="stylesheet" href="{{ asset('css/app.css') }}">

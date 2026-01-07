@@ -11,9 +11,14 @@
 .width-50 {
     width: 50px;
 }
+.qty{
+    width: 60px;
+    border: 1px solid black;
+}
 .width-160{
     max-width:160px;
 }
+
 .img-contain {
     max-height: 400px;
     object-fit: contain;
@@ -22,3 +27,10 @@
     max-height: 200px;
     object-fit: cover;
 }
+.product-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
