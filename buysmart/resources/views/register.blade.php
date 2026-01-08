@@ -22,7 +22,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('register') }}" id="registerForm">
+                <form class="mb-3" method="POST" action="{{ route('register') }}" id="registerForm">
                     @csrf
 
                     <div class="mb-3">
@@ -53,7 +53,7 @@
                 </form>
 
 
-                <div class="text-center mt-3">
+                <div class="text-center">
                     <a href="{{ route('login') }}" class="text-success">Already have account?</a>
                 </div>
 

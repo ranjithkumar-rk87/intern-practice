@@ -60,6 +60,16 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserDetail::class);
     }
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+
         protected static function booted()
     {
         static::saved(function ($user) {

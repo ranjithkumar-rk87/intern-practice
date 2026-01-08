@@ -4,3 +4,6 @@
 <x-backpack::menu-item title="Users" icon="la la-users" :link="backpack_url('user')" />
 <x-backpack::menu-item title="Products" icon="la la-box" :link="backpack_url('product')" />
 <x-backpack::menu-item title="Orders" icon="la la-shopping-cart" :link="backpack_url('order')" />
+<x-backpack::menu-item title="Pincodes" icon="las la-map-marker-alt" :link="backpack_url('pincode')" />
+<x-backpack::menu-item title="Product questions" icon="la la-question" :link="backpack_url('product-question')" />
+<x-backpack::menu-item title="Reviews" icon="la la-star" :link="backpack_url('review')" />

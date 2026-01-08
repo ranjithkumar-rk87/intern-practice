@@ -6,9 +6,11 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
-
+use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\ProductQuestionController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [UserController::class, 'edit'])->name('profile.edit');
@@ -16,6 +18,8 @@ Route::middleware('auth')->group(function () {
 });
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('products.show');
+Route::post('/product/{product}/review', [ProductController::class, 'storeReview'])->name('product.review.store');
+Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
 
 Route::middleware('auth','role:admin')->group(function () {
 Route::get('/create', [ProductController::class, 'create'])->name('admin.products.create');
@@ -85,4 +89,25 @@ Route::get('/orders', [AdminOrderController::class, 'index'])->name('admin.order
 Route::get('/admin//orders/{id}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
 Route::post('/orders/{id}/status', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.status');
 Route::delete('/admin/orders/{id}', [AdminOrderController::class, 'destroy'])->name('admin.orders.destroy');
+});
+
+Route::middleware('auth')->group(function () {
+
+Route::post('/wishlist/{product}', [WishlistController::class, 'store'])->name('wishlist.add');
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+Route::delete('/wishlist/{product}', [WishlistController::class, 'destroy'])->name('wishlist.remove');
+});
+
+
+Route::post('/delivery-check/{product}', [DeliveryController::class, 'check'])->name('delivery.check');
+
+
+Route::middleware('auth')->group(function () {
+    Route::post('/products/{product}/questions', [ProductQuestionController::class, 'store'])
+        ->name('product.question.store');
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::post('/questions/{question}/answer', [ProductQuestionController::class, 'answer'])
+        ->name('product.question.answer');
 });

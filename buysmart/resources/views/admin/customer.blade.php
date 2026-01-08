@@ -67,8 +67,8 @@
                                         </button>
                                     </form>
                                 @endif
-                            </td>
-                                    <td onclick="event.stopPropagation();">
+                                </td>
+                                <td onclick="event.stopPropagation();">
                                     <form action="{{ route('users.destroy', $user->id) }}"
                                           method="POST"
                                           onsubmit="return confirm('Are you sure you want to delete this user?');">

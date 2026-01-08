@@ -7,6 +7,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4IhKqH+P+8a4dK2Z2Y1Q=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
 </head>
 <body class="bg-light">
@@ -53,6 +58,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('cart') }}">Cart</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('wishlist.index') }}">Wishlist</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('profile.edit') }}">Edit Profile</a>

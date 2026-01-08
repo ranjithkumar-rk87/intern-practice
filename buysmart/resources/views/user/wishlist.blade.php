@@ -1,0 +1,51 @@
+@extends('layouts.app')
+
+@section('title', 'My Wishlist')
+
+@section('content')
+<div class="container my-5">
+    <h3 class="mb-4">My Wishlist</h3>
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+
+    @if($items->isEmpty())
+        <p>No items in wishlist.</p>
+    @endif
+
+    <div class="row">
+        @foreach($items as $item)
+        <div class="col-md-3">
+            <div class="card mb-3">
+                <img src="{{ asset('storage/'.$item->product->image) }}" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>{{ $item->product->name }}</h6>
+
+                         <div class="d-flex justify-content-center gap-2">
+                        {{-- Add to Cart Button --}}
+                        <form action="{{ route('cart.add', $item->product->id) }}" method="GET">
+                            @csrf
+                            <button class="btn btn-sm btn-primary">
+                                Add to Cart
+                            </button>
+                        </form>
+
+                        {{-- Remove from Wishlist --}}
+                        <form action="{{ route('wishlist.remove', $item->product->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-sm btn-danger">
+                                Remove
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+@endsection

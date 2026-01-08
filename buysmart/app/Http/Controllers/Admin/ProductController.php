@@ -14,6 +14,19 @@ class ProductController extends Controller
         $products = Product::latest()->get();
         return view('index', compact('products'));
     }
+     public function search(Request $request)
+    {
+        $request->validate([
+            'search' => 'nullable|string|max:255'
+        ]);
+
+        $products = Product::where('name', 'like', '%'.$request->search.'%')
+            ->orWhere('description', 'like', '%'.$request->search.'%')
+            ->latest()
+            ->get();
+
+        return view('index', compact('products'));
+    }
 
     public function create()
     {
@@ -47,8 +60,15 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $product = Product::findOrFail($id);
-        return view('user.show', compact('product'));
+        //$product = Product::findOrFail($id);
+        $product = Product::with('questions.user')->findOrFail($id);
+
+        $relatedProducts = Product::where('category_name', $product->category_name)
+                              ->where('id', '!=', $product->id)
+                              ->take(4)
+                              ->get();
+        #return view('user.show', compact('product'));
+        return view('user.show', compact('product', 'relatedProducts'));
     }
      public function productList()
     {
@@ -103,6 +123,23 @@ class ProductController extends Controller
 
         return back()->with('success', 'Product deleted successfully');
     }
+    public function storeReview(Request $request, $productId)
+{
+    $request->validate([
+        'rating' => 'required|integer|min:1|max:5',
+        'review' => 'nullable|string|max:1000',
+    ]);
+
+    $product = Product::findOrFail($productId);
+
+    $product->reviews()->updateOrCreate(
+        ['user_id' => auth()->id()],
+        ['rating' => $request->rating, 'review' => $request->review]
+    );
+
+    return back()->with('success', 'Your review has been submitted.');
+}
+
 
     
 }

@@ -15,6 +15,7 @@ class Product extends Model
 
     protected $fillable = [
         'name',
+        'category_name', 
         'description',
         'price',
         'stock',
@@ -24,6 +25,21 @@ class Product extends Model
     {
         return $this->hasMany(Cart::class);
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function averageRating()
+    {
+        return $this->reviews()->avg('rating');
+    }
+
+    public function questions()
+    {
+        return $this->hasMany(ProductQuestion::class)->latest();
+    }
+
 
         public function setImageAttribute($value)
         {

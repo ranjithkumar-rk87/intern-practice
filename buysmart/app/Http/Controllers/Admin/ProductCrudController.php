@@ -64,6 +64,11 @@ class ProductCrudController extends CrudController
             'label'=>'Product Name',
             'type' => 'text',
         ]);
+         CRUD::addColumn([
+            'name' => 'category_name',
+            'label' => 'Category',
+            'type' => 'text',
+        ]);
 
         CRUD::addColumn([
             'name' => 'price',
@@ -113,6 +118,11 @@ class ProductCrudController extends CrudController
             'name' => 'name',
             'type' => 'text',
             'label' => 'Product Name',
+        ]);
+           CRUD::addField([
+            'name' => 'category_name',
+            'type' => 'text',
+            'label' => 'Category Name',
         ]);
 
         CRUD::addField([

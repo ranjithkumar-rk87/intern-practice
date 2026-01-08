@@ -2,6 +2,9 @@
 
 @section('content')
 <div class="container-fluid">
+<a href="{{ url()->previous() }}" class="btn btn-sm btn-link mb-3">
+    <i class="la la-angle-left"></i> Back
+</a>
 
     <div class="card">
         <div class="card-body">

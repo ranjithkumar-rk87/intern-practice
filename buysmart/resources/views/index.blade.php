@@ -3,8 +3,37 @@
 @section('title','Products')
 
 @section('content')
+
 <div class="container">
     <div class="row g-4">
+            <form method="GET" action="{{ route('products.search') }}">
+        <div class="row g-2 align-items-center">
+            <div class="col-md-10">
+                <input type="text"
+                       name="search"
+                       class="form-control"
+                       placeholder="Search products..."
+                       value="{{ request('search') }}">
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-dark w-100">
+                    Search
+                </button>
+            </div>
+        </div>
+    </form>
+    @if(request('search'))
+        <h6 class="mb-3">
+            Search results for:
+            <strong>"{{ request('search') }}"</strong>
+            <a href="{{ route('products.index') }}"
+       class="text-decoration-none text-secondary mb-3 d-inline-block">
+        ✕ Clear search
+    </a>
+        </h6>
+    @endif
+
+
         @foreach($products as $product)
         <div class="col-lg-3 col-md-4 col-sm-6">
             <div class="card h-100 shadow">
