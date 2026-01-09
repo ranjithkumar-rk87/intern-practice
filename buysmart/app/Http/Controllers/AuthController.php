@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Order;
+use Illuminate\Support\Facades\Password;
+
 
 class AuthController extends Controller
 {
@@ -110,4 +112,56 @@ class AuthController extends Controller
 
     return back()->with('success', 'Password changed successfully!');
 }
+ public function showForgotForm()
+    {
+        return view('forgotpassword');
+    }
+    public function sendResetLink(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->with('error', 'This email does not exist in our records.');
+        }
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        if ($status === Password::RESET_LINK_SENT) {
+            return back()->with('success', __($status));
+        } else {
+            return back()->with('error', __($status));
+        }
+    }
+     public function showResetForm($token)
+    {
+        return view('reset-password', ['token' => $token]);
+    }
+
+    public function reset(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|confirmed|min:6',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->password = Hash::make($password);
+                $user->save();
+            }
+        );
+
+        return $status === Password::PASSWORD_RESET
+            ? redirect()->route('login')->with('success', 'Password reset successfully.')
+            : back()->with('error', 'Invalid token or email. Please try again.');
+    }
 }
+

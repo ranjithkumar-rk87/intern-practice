@@ -6,54 +6,65 @@
 
 <div class="container">
     <div class="row g-4">
-            <form method="GET" action="{{ route('products.search') }}">
-        <div class="row g-2 align-items-center">
-            <div class="col-md-10">
-                <input type="text"
-                       name="search"
-                       class="form-control"
-                       placeholder="Search products..."
-                       value="{{ request('search') }}">
-            </div>
-            <div class="col-md-2">
-                <button class="btn btn-dark w-100">
-                    Search
-                </button>
-            </div>
-        </div>
-    </form>
-    @if(request('search'))
-        <h6 class="mb-3">
-            Search results for:
-            <strong>"{{ request('search') }}"</strong>
-            <a href="{{ route('products.index') }}"
-       class="text-decoration-none text-secondary mb-3 d-inline-block">
-        ✕ Clear search
-    </a>
-        </h6>
-    @endif
 
+        <form method="GET" action="{{ route('products.search') }}">
+            <div class="row g-2 align-items-center">
+                <div class="col-md-10">
+                    <input type="text"
+                           name="search"
+                           class="form-control"
+                           placeholder="Search products..."
+                           value="{{ request('search') }}">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-dark w-100">
+                        Search
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        @if(request('search'))
+            <h6 class="mb-3">
+                Search results for:
+                <strong>"{{ request('search') }}"</strong>
+                <a href="{{ route('products.index') }}"
+                   class="text-decoration-none text-secondary ms-2">
+                    ✕ Clear search
+                </a>
+            </h6>
+        @endif
 
         @foreach($products as $product)
-        <div class="col-lg-3 col-md-4 col-sm-6">
-            <div class="card h-100 shadow">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card h-100 shadow">
 
-                <img src="{{ asset('storage/'.$product->image) }}"
-                     class="card-img-top img-cover ">
+                    <img src="{{ asset('storage/'.$product->image) }}"
+                         class="card-img-top img-cover">
 
-                <div class="card-body d-flex flex-column">
-                    <h6>{{ $product->name }}</h6>
-                    <p class="text-success">₹{{ $product->price }}</p>
+                    <div class="card-body d-flex flex-column text-center">
+                        <h6>{{ $product->name }}</h6>
 
-                    <a href="{{ route('products.show',$product->id) }}"
-                       class="btn btn-danger btn-sm mt-auto">
-                        Show Now
-                    </a>
+                        @if($product->stock > 0)
+                            <p class="text-success mb-2">
+                                ₹{{ number_format($product->price, 2) }}
+                            </p>
+                        @else
+                            <span class="badge text-dark mb-2">Out of Stock</span>
+                         @endif
+
+                            <a href="{{ route('products.show',$product->id) }}"
+                               class="btn btn-danger btn-sm mt-auto">
+                                Show Now
+                            </a>
+                       
+
+                    </div>
                 </div>
-
             </div>
-        </div>
         @endforeach
+
     </div>
 </div>
+
 @endsection

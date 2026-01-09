@@ -98,7 +98,7 @@
 
                 <div class="d-flex justify-content-between">
                     <h4>Total: <span class="text-success">₹{{ $grandTotal }}</span></h4>
-                    <form action="{{ route('checkout') }}" method="POST">
+                    <form action="{{ route('checkout.index') }}">
                         @csrf
                         <button class="btn btn-success">
                             Checkout

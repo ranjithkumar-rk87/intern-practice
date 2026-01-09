@@ -3,11 +3,20 @@
 @section('title', 'Order Details')
 
 @section('content')
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Order #{{ $order->id }}</h3>
+    <a href="{{ route('orders.index') }}" class="btn btn-secondary">
+        ← Back to Orders
+    </a>
+</div>
+
 <h3>Order #{{ $order->id }}</h3>
 <p>Status: {{ ucfirst($order->status) }}</p>
 <p>Total: ₹{{ $order->total_amount }}</p>
 
 @php $detail = $order->user->detail; @endphp
+
 
 <div class="card mb-3">
     <div class="card-header fw-bold">

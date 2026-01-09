@@ -48,6 +48,9 @@
                         <small class="text-danger" id="passwordError"></small>
                     </div>
 
+                    <div class="text-end mb-3">
+                        <a href="{{ route('forgot.password.form') }}">Forgot Password?</a>
+                    </div>
                     <button class="btn btn-success w-100">Login</button>
                 </form>
 

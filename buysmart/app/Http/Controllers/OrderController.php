@@ -6,6 +6,7 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\Cart;
 class OrderController extends Controller
 {
     public function index()
@@ -35,8 +36,30 @@ class OrderController extends Controller
 
         return back()->withInput(['quantity' => $qty]);
     }
-    public function store()
+    public function checkout(){
+         $cartItems = Cart::with('product')
+            ->where('user_id', Auth::id())
+            ->get();
+
+        if ($cartItems->isEmpty()) {
+            return redirect()->route('cart')
+                ->with('error', 'Your cart is empty');
+        }
+
+        return view('user.checkout', compact('cartItems'));
+    }
+    public function placeorder(Request $request)
     {
+
+         $request->validate([
+            'phone'          => 'required|digits:10',
+            'address'        => 'required|string',
+            'city'           => 'required|string',
+            'state'          => 'required|string',
+            'pincode'        => 'required|digits:6',
+            'payment_method' => 'required|in:cod,online',
+        ]);
+
         $cartItems = Auth::user()->carts()->with('product')->get();
 
         if ($cartItems->isEmpty()) {
@@ -68,6 +91,12 @@ class OrderController extends Controller
             'user_id' => Auth::id(),
             'total_amount' => $totalAmount,
             'status' => 'pending',
+            'phone'          => $request->phone,
+            'address'        => $request->address,
+            'city'           => $request->city,
+            'state'          => $request->state,
+            'pincode'        => $request->pincode,
+            'payment_method' => $request->payment_method,
         ]);
 
         // Order items
@@ -77,6 +106,8 @@ class OrderController extends Controller
                 'product_id' => $item->product_id,
                 'quantity' => $item->quantity,
                 'price' => $item->product->price,
+                'product_name' => $item->product->name,
+                'subtotal'     => $item->product->price * $item->quantity,
             ]);
         }
 

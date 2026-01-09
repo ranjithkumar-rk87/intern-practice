@@ -45,6 +45,12 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::get('/forgot-password', [AuthController::class, 'showForgotForm']) ->name('forgot.password.form');
+Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('forgetpassword');
+Route::get('/reset-password/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [AuthController::class, 'reset'])->name('password.update');
+
+
 Route::middleware('auth')->group(function () {
                                     // change /admin/dashboard
 Route::middleware('role:admin')->get('/dashboard', [AuthController::class, 'adminDashboard'])->name('admindashboard');
@@ -76,7 +82,8 @@ Route::middleware('auth','role:user')->group(function () {
 
 Route::get('/orders/{id}', [OrderController::class, 'usershow'])->name('orders.show');
 Route::get('/my-orders', [OrderController::class, 'index'])->name('orders.index');
-Route::post('/checkout', [OrderController::class, 'store'])->name('checkout');
+Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout.index');
+Route::post('/checkout/place-order', [OrderController::class, 'placeorder'])->name('checkout.place');
 Route::get('/buy-now/{id}', [OrderController::class, 'buyNow'])->name('buy.now');
 Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
 Route::get('/quantity/{product}', [OrderController::class, 'updateQty'])->name('quantity.update');

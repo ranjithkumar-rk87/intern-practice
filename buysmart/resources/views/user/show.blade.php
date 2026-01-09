@@ -98,19 +98,20 @@
                                 class="btn btn-outline-secondary">+</button>
                     </div>
 
-                    {{-- Actions --}}
-                    <div class="d-grid gap-3">
+                    
+\                   <div class="d-flex gap-2 mt-3">
                         <button formaction="{{ route('cart.add', $product->id) }}"
-                                class="btn btn-primary btn-lg">
-                             Add to Cart
+                                class="btn btn-primary  px-5 flex-fill">
+                            Add to Cart
                         </button>
 
                         <button formaction="{{ route('buy.now', $product->id) }}"
-                                class="btn btn-success btn-lg"
+                                class="btn btn-success px-5 flex-fill"
                                 {{ $product->stock == 0 ? 'disabled' : '' }}>
-                                 Buy Now
+                            Buy Now
                         </button>
                     </div>
+
                 </form>
                 <form action="{{ route('delivery.check', $product->id) }}"method="POST"class="mt-4">
                 @csrf
@@ -245,33 +246,39 @@
         </div>
     </div>
     @if($relatedProducts->count() > 0)
-    <div class="row mt-5">
-        <div class="col-12">
-            <h3>Related Products</h3>
-        </div>
+<div class="row mt-5">
+    <div class="col-12">
+        <h3>Related Products</h3>
+    </div>
 
-        @foreach($relatedProducts as $related)
-        <div class="col-md-3 col-sm-6 mb-4">
-            <div class="card h-100 shadow-sm">
-                <a href="{{ route('products.show', $related->id) }}">
-                    <img src="{{ asset('storage/'.$related->image) }}" 
-                        class="card-img-top" 
-                        alt="{{ $related->name }}">
-                </a>
-                <div class="card-body text-center">
-                    <h6>{{ $related->name }}</h6>
-                    <p class="text-success mb-1">₹{{ number_format($related->price, 2) }}</p>
-                    @if($related->stock > 0)
-                        <span class="badge bg-success">In Stock</span>
-                    @else
-                        <span class="badge bg-danger">Out of Stock</span>
-                    @endif
-                </div>
+    @foreach($relatedProducts as $related)
+    <div class="col-md-3 col-sm-6 mb-4">
+        <div class="card h-100 shadow-sm">
+            <a href="{{ route('products.show', $related->id) }}">
+                <img src="{{ asset('storage/'.$related->image) }}"
+                     class="card-img-top"
+                     alt="{{ $related->name }}">
+            </a>
+
+            <div class="card-body text-center">
+                <h6>{{ $related->name }}</h6>
+
+                @if($related->stock > 0)
+                    <p class="text-success mb-1">
+                        ₹{{ number_format($related->price, 2) }}
+                    </p>
+                    <span class="badge bg-success">In Stock</span>
+                @else
+                    <span class="badge bg-danger">Out of Stock</span>
+                @endif
+
             </div>
         </div>
-        @endforeach
     </div>
-    @endif
+    @endforeach
+</div>
+@endif
+
 
 
 </div>

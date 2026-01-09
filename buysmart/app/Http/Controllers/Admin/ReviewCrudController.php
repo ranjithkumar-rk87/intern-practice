@@ -65,7 +65,11 @@ class ReviewCrudController extends CrudController
           CRUD::column('rating');
         CRUD::column('review');
         CRUD::column('created_at');
+
+        $this->crud->denyAccess('update');
+
     }
+    
 
     /**
      * Define what happens when the Create operation is loaded.
