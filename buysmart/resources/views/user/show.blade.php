@@ -5,7 +5,6 @@
 @section('content')
 <div class="container my-5">
 
-    {{-- Alerts --}}
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
@@ -17,7 +16,7 @@
 
         {{-- Product Image --}}
         <div class="col-md-6">
-            <div class="card shadow-sm">
+            <div class="card border rounded shadow-sm">
                 <img src="{{ asset('storage/'.$product->image) }}"
                      class="img-fluid rounded">
             </div>
@@ -54,12 +53,13 @@
                     @endauth
                 </div>
 
-                {{-- Price --}}
-                <h4 class="text-success mt-2">
-                    ₹{{ number_format($product->price, 2) }}
-                </h4>
+                @if($product->stock > 0)
+                    <h4 class="text-success mb-2">
+                        ₹{{ number_format($product->price, 2) }}
+                    </h4>
+                @endif
 
-                {{-- Stock Status --}}
+
                 <div class="my-2">
                     @if($product->stock > 10)
                         <span class="badge bg-success">In Stock</span>
@@ -72,7 +72,6 @@
                     @endif
                 </div>
 
-                {{-- Description --}}
                 <p class="text-muted mt-3">
                     {{ $product->description }}
                 </p>
@@ -99,7 +98,7 @@
                     </div>
 
                     
-\                   <div class="d-flex gap-2 mt-3">
+                   <div class="d-flex gap-2 mt-3">
                         <button formaction="{{ route('cart.add', $product->id) }}"
                                 class="btn btn-primary  px-5 flex-fill">
                             Add to Cart

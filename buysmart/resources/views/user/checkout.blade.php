@@ -89,7 +89,6 @@
 
         <div class="col-lg-4">
 
-            {{-- Order Summary --}}
             <div class="card shadow-sm sticky-top" style="top: 90px;">
                 <div class="card-header bg-dark text-white fw-semibold">
                     🧾 Order Summary

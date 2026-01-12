@@ -74,4 +74,9 @@ class OrderCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+  protected function setupShowOperation()
+{
+    CRUD::set('show.view', 'vendor.backpack.crud.order_preview');
+}
+
 }

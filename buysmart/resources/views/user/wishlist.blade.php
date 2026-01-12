@@ -25,7 +25,6 @@
                     <h6>{{ $item->product->name }}</h6>
 
                          <div class="d-flex justify-content-center gap-2">
-                        {{-- Add to Cart Button --}}
                         <form action="{{ route('cart.add', $item->product->id) }}" method="GET">
                             @csrf
                             <button class="btn btn-sm btn-primary">
@@ -33,7 +32,6 @@
                             </button>
                         </form>
 
-                        {{-- Remove from Wishlist --}}
                         <form action="{{ route('wishlist.remove', $item->product->id) }}" method="POST">
                             @csrf
                             @method('DELETE')

@@ -9,7 +9,6 @@ use Spatie\Permission\Middlewares\RoleOrPermissionMiddleware;
 class Kernel extends HttpKernel
 {
     protected $middlewareAliases = [
-        // ... other aliases
         'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
     ];
     protected $routeMiddleware = [

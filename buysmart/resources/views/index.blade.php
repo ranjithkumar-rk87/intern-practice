@@ -37,7 +37,7 @@
 
         @foreach($products as $product)
             <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="card h-100 shadow">
+                <div class="card border rounded h-100 shadow">
 
                     <img src="{{ asset('storage/'.$product->image) }}"
                          class="card-img-top img-cover">
@@ -50,11 +50,11 @@
                                 ₹{{ number_format($product->price, 2) }}
                             </p>
                         @else
-                            <span class="badge text-dark mb-2">Out of Stock</span>
+                            <span class="badge  text-danger mb-2">Out of Stock</span>
                          @endif
 
                             <a href="{{ route('products.show',$product->id) }}"
-                               class="btn btn-danger btn-sm mt-auto">
+                               class="btn btn-primary btn-sm mt-auto">
                                 Show Now
                             </a>
                        

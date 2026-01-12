@@ -11,7 +11,6 @@
     </a>
 </div>
 
-<h3>Order #{{ $order->id }}</h3>
 <p>Status: {{ ucfirst($order->status) }}</p>
 <p>Total: ₹{{ $order->total_amount }}</p>
 
