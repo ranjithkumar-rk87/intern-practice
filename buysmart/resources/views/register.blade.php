@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="row justify-content-center">
-    <div class="col-md-5">
+    <div class="col-12 col-sm-8 col-md-6 col-lg-5">
         <div class="card shadow">
             <div class="card-header bg-success text-white text-center">
                 <h4>Register</h4>
@@ -28,25 +28,25 @@
                     <div class="mb-3">
                         <label>Name</label>
                         <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}">
-                        <small class="text-danger" id="nameError"></small>
+                        <p class="text-danger" id="nameError"></p>
                     </div>
 
                     <div class="mb-3">
                         <label>Email</label>
                         <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}">
-                        <small class="text-danger" id="emailError"></small>
+                        <p class="text-danger" id="emailError"></p>
                     </div>
 
                     <div class="mb-3">
                         <label>Password</label>
                         <input type="password" name="password" id="password" class="form-control">
-                        <small class="text-danger" id="passwordError"></small>
+                        <p class="text-danger" id="passwordError"></p>
                     </div>
 
                     <div class="mb-3">
                         <label>Confirm Password</label>
                         <input type="password" name="password_confirmation" id="confirmPassword" class="form-control">
-                        <small class="text-danger" id="confirmPasswordError"></small>
+                        <p class="text-danger" id="confirmPasswordError"></p>
                     </div>
 
                     <button class="btn btn-success w-100">Register</button>

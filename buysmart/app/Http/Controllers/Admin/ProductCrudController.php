@@ -112,6 +112,7 @@ class ProductCrudController extends CrudController
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'image' => 'nullable|image|mimes:jpg,jpeg,png',
+            'specifications' => 'nullable|json',
         ]);
 
         CRUD::addField([
@@ -129,6 +130,33 @@ class ProductCrudController extends CrudController
             'name' => 'description',
             'type' => 'textarea',
             'label' => 'Description',
+        ]);
+          if ($this->crud->getCurrentEntry()) {
+            $specs = $this->crud->getCurrentEntry()->specifications;
+            if (is_array($specs)) {
+                $this->crud->getCurrentEntry()->specifications =
+                    json_encode($specs, JSON_PRETTY_PRINT);
+            }
+        }
+        CRUD::addField([
+    'name'  => 'specifications',
+    'label' => 'Specifications (JSON)',
+    'type'  => 'textarea',
+    'attributes' => [
+        'rows' => 12,
+    ],
+    'hint' => 'Enter valid JSON only',
+]);
+
+
+        CRUD::addField([
+            'name'  => 'specifications',
+            'label' => 'Specifications (JSON)',
+            'type'  => 'textarea',
+            'attributes' => [
+                'rows' => 12,
+            ],
+            'hint' => 'Enter valid JSON only',
         ]);
 
         CRUD::addField([

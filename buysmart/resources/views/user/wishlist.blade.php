@@ -18,19 +18,19 @@
 
     <div class="row">
         @foreach($items as $item)
-        <div class="col-md-3">
-            <div class="card mb-3">
-                <img src="{{ asset('storage/'.$item->product->image) }}" class="card-img-top">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card border rounded h-100 mb-3">
+                <img src="{{ asset('storage/'.$item->product->image) }}" class="card-img-top  img-fluid" alt="{{ $item->product->name }}">
                 <div class="card-body text-center">
                     <h6>{{ $item->product->name }}</h6>
 
-                         <div class="d-flex justify-content-center gap-2">
-                        <form action="{{ route('cart.add', $item->product->id) }}" method="GET">
-                            @csrf
-                            <button class="btn btn-sm btn-primary">
-                                Add to Cart
-                            </button>
-                        </form>
+                         <div class="d-flex flex-column flex-sm-row justify-content-center gap-2 mt-auto">
+                            <form action="{{ route('cart.add', $item->product->id) }}" method="GET">
+                                @csrf
+                                <button class="btn btn-sm btn-primary w-sm-auto">
+                                    Add to Cart
+                                </button>
+                            </form>
 
                         <form action="{{ route('wishlist.remove', $item->product->id) }}" method="POST">
                             @csrf

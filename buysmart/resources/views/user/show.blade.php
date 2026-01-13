@@ -13,44 +13,45 @@
     @endif
 
     <div class="row g-4 align-items-start">
-
-        {{-- Product Image --}}
-        <div class="col-md-6">
-            <div class="card border rounded shadow-sm">
-                <img src="{{ asset('storage/'.$product->image) }}"
-                     class="img-fluid rounded">
-            </div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <a href="{{ route('products.index') }}" class="btn btn-secondary">
+                ← Back to Home
+            </a>
         </div>
 
-        {{-- Product Details --}}
-        <div class="col-md-6">
-            <div class="card shadow-sm p-4">
+    <div class="col-12 col-md-6">
+        <div class="card border rounded shadow-sm product_image" >
+            <img src="{{ asset('storage/'.$product->image) }}" class="w-100 h-100">
+        </div>
+    </div>
 
-                {{-- Title + Wishlist --}}
-                <div class="d-flex justify-content-between align-items-start">
-                    <h2 class="fw-bold">{{ $product->name }}</h2>
+    <div class="col-12 col-md-6 mt-4 mt-md-0">
+        <div class="card shadow-sm p-4">
 
-                    @auth
-                        @php
-                            $exists = auth()->user()
-                                ->wishlist()
-                                ->where('product_id', $product->id)
-                                ->exists();
-                        @endphp
+            <div class="d-flex justify-content-between align-items-start">
+                <h2 class="fw-bold">{{ $product->name }}</h2>
 
-                        @if(!$exists)
-                            <form action="{{ route('wishlist.add', $product->id) }}" method="POST">
-                                @csrf
-                                <button class="btn btn-outline-danger btn-sm">
-                                    ❤️ Wishlist
-                                </button>
-                            </form>
-                        @else
-                            <span class="badge bg-danger px-3 py-2">
-                                ❤️ Wishlisted
-                            </span>
-                        @endif
-                    @endauth
+                @auth
+                    @php
+                        $exists = auth()->user()
+                            ->wishlist()
+                            ->where('product_id', $product->id)
+                            ->exists();
+                    @endphp
+
+                    @if(!$exists)
+                        <form action="{{ route('wishlist.add', $product->id) }}" method="POST">
+                            @csrf
+                            <button class="btn btn-outline-danger btn-sm">
+                                ❤️ Wishlist
+                            </button>
+                        </form>
+                    @else
+                        <span class="badge bg-danger px-3 py-2">
+                            ❤️ Wishlisted
+                        </span>
+                    @endif
+                @endauth
                 </div>
 
                 @if($product->stock > 0)
@@ -78,8 +79,6 @@
 
                 @auth
                 <form method="GET" class="mt-4">
-
-                    {{-- Quantity --}}
                     <label class="form-label fw-semibold">Quantity</label>
                     <div class="input-group mb-3" style="max-width:180px;">
                         <button formaction="{{ route('quantity.update', $product->id) }}"
@@ -99,16 +98,17 @@
 
                     
                    <div class="d-flex gap-2 mt-3">
-                        <button formaction="{{ route('cart.add', $product->id) }}"
-                                class="btn btn-primary  px-5 flex-fill">
+                         <button formaction="{{ route('cart.add', $product->id) }}"
+                                class="btn btn-primary px-5 flex-fill"
+                                {{ $product->stock == 0 ? 'disabled' : '' }}>
                             Add to Cart
                         </button>
 
-                        <button formaction="{{ route('buy.now', $product->id) }}"
+                        <!-- <button formaction="{{ route('buy.now', $product->id) }}"
                                 class="btn btn-success px-5 flex-fill"
                                 {{ $product->stock == 0 ? 'disabled' : '' }}>
                             Buy Now
-                        </button>
+                        </button> -->
                     </div>
 
                 </form>
@@ -144,7 +144,63 @@
         </div>
     </div>
 
-    
+
+@php
+    $specs = json_decode($product->specifications, true);
+@endphp
+
+@if(is_array($specs) && count($specs))
+    <h4 class="mt-4">Specifications</h4>
+
+<div class="accordion" id="productSpecsAccordion">
+
+    @foreach($specs as $section => $items)
+        @php
+            $headingId = 'heading_' . $loop->index;
+            $collapseId = 'collapse_' . $loop->index;
+        @endphp
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="{{ $headingId }}">
+                <button class="accordion-button {{ !$loop->first ? 'collapsed' : '' }}"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#{{ $collapseId }}"
+                        aria-expanded="{{ $loop->first ? 'true' : 'false' }}"
+                        aria-controls="{{ $collapseId }}">
+                    {{ ucfirst(str_replace('_', ' ', $section)) }}
+                </button>
+            </h2>
+
+            <div id="{{ $collapseId }}"
+                 class="accordion-collapse collapse {{ $loop->first ? 'show' : '' }}"
+                 aria-labelledby="{{ $headingId }}"
+                 data-bs-parent="#productSpecsAccordion">
+
+                <div class="accordion-body">
+                    <div class="row g-3">
+                        @if(is_array($items))
+                            @foreach($items as $key => $value)
+                                <div class="col-md-6">
+                                    <strong>{{ str_replace('_', ' ', $key) }}:</strong>
+                                    {{ is_array($value) ? implode(', ', $value) : $value }}
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="col-12">
+                                {{ $items }}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    @endforeach
+</div>
+@endif
+
 
     <div class="row mt-5">
         <div class="col-12">
@@ -181,7 +237,6 @@
                 @endforelse
             </div>
 
-            {{-- Add Review Form --}}
             @auth
             <form action="{{ route('product.review.store', $product->id) }}" method="POST">
                 @csrf
@@ -230,7 +285,6 @@
                 @endforelse
             </div>
 
-            {{-- Ask Question Form --}}
             @auth
             <form action="{{ route('product.question.store', $product->id) }}" method="POST">
                 @csrf
@@ -245,38 +299,38 @@
         </div>
     </div>
     @if($relatedProducts->count() > 0)
-<div class="row mt-5">
-    <div class="col-12">
-        <h3>Related Products</h3>
-    </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3>Related Products</h3>
+        </div>
 
-    @foreach($relatedProducts as $related)
-    <div class="col-md-3 col-sm-6 mb-4">
-        <div class="card h-100 shadow-sm">
-            <a href="{{ route('products.show', $related->id) }}">
-                <img src="{{ asset('storage/'.$related->image) }}"
-                     class="card-img-top"
-                     alt="{{ $related->name }}">
-            </a>
+        @foreach($relatedProducts as $related)
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 mb-4">
+            <div class="card  border rounded h-100 shadow-sm">
+                <a href="{{ route('products.show', $related->id) }}">
+                    <img src="{{ asset('storage/'.$related->image) }}"
+                        class="card-img-top"
+                        alt="{{ $related->name }}">
+                </a>
 
-            <div class="card-body text-center">
-                <h6>{{ $related->name }}</h6>
+                <div class="card-body text-center">
+                    <h6>{{ $related->name }}</h6>
 
-                @if($related->stock > 0)
-                    <p class="text-success mb-1">
-                        ₹{{ number_format($related->price, 2) }}
-                    </p>
-                    <span class="badge bg-success">In Stock</span>
-                @else
-                    <span class="badge bg-danger">Out of Stock</span>
-                @endif
+                    @if($related->stock > 0)
+                        <p class="text-success mb-1">
+                            ₹{{ number_format($related->price, 2) }}
+                        </p>
+                        <span class="badge bg-success">In Stock</span>
+                    @else
+                        <span class="badge bg-danger">Out of Stock</span>
+                    @endif
 
+                </div>
             </div>
         </div>
+        @endforeach
     </div>
-    @endforeach
-</div>
-@endif
+    @endif
 
 
 

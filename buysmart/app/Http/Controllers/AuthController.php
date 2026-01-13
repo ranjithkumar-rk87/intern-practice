@@ -138,9 +138,10 @@ class AuthController extends Controller
             return back()->with('error', __($status));
         }
     }
-     public function showResetForm($token)
+     public function showResetForm(Request $request, $token)
     {
-        return view('reset-password', ['token' => $token]);
+        
+        return view('reset-password', ['token' => $token,'email' => $request->email,]);
     }
 
     public function reset(Request $request)

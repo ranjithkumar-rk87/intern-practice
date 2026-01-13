@@ -39,12 +39,39 @@ class OrderCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // set columns from db columns.
+       // CRUD::setFromDb(); // set columns from db columns.
 
         /**
          * Columns can be defined using the fluent syntax:
          * - CRUD::column('price')->type('number');
          */
+         CRUD::column('id');
+    CRUD::column('total_amount');
+    CRUD::column('status');
+
+    CRUD::addColumn([
+        'label'     => 'Address',
+        'type'      => 'text',
+        'name'      => 'deliveryAddress.address',
+    ]);
+
+    CRUD::addColumn([
+        'label'     => 'City',
+        'type'      => 'text',
+        'name'      => 'deliveryAddress.city',
+    ]);
+
+    CRUD::addColumn([
+        'label'     => 'State',
+        'type'      => 'text',
+        'name'      => 'deliveryAddress.state',
+    ]);
+
+    CRUD::addColumn([
+        'label'     => 'Pincode',
+        'type'      => 'text',
+        'name'      => 'deliveryAddress.pincode',
+    ]);
     }
 
     /**
@@ -55,13 +82,69 @@ class OrderCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(OrderRequest::class);
-        CRUD::setFromDb(); // set fields from db columns.
+       // CRUD::setValidation(OrderRequest::class);
+        //CRUD::setFromDb(); // set fields from db columns.
 
         /**
          * Fields can be defined using the fluent syntax:
          * - CRUD::field('price')->type('number');
          */
+         CRUD::setValidation([
+        'user_id' => 'required|exists:users,id',
+        'address_id' => 'required|exists:addresses,id',
+        'total_amount' => 'required|numeric',
+        'status' => 'required|in:pending,completed,cancelled',
+        'payment_method' => 'required|in:cod,online',
+    ]);
+
+    // User select_from_array
+    CRUD::addField([
+        'name' => 'user_id',
+        'label' => 'User',
+        'type' => 'select_from_array',
+        'options' => \App\Models\User::pluck('name', 'id')->toArray(),
+    ]);
+
+    // Address select_from_array
+    CRUD::addField([
+        'name' => 'address_id',
+        'label' => 'Delivery Address',
+        'type' => 'select_from_array',
+        'options' => \App\Models\Address::pluck('address', 'id')->toArray(),
+    ]);
+
+    // Total amount
+    CRUD::addField([
+        'name' => 'total_amount',
+        'label' => 'Total Amount',
+        'type' => 'number',
+        'attributes' => ['step' => '0.01'],
+    ]);
+
+    // Status
+    CRUD::addField([
+        'name' => 'status',
+        'label' => 'Order Status',
+        'type' => 'select_from_array',
+        'options' => [
+            'pending' => 'Pending',
+            'completed' => 'Completed',
+            'delivered' => 'Delivered',
+        ],
+        'default' => 'pending',
+    ]);
+
+    // Payment method
+    CRUD::addField([
+        'name' => 'payment_method',
+        'label' => 'Payment Method',
+        'type' => 'select_from_array',
+        'options' => [
+            'cod' => 'Cash on Delivery',
+            'online' => 'Online Payment',
+        ],
+        'default' => 'cod',
+    ]);
     }
 
     /**
@@ -74,9 +157,8 @@ class OrderCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
-  protected function setupShowOperation()
+     protected function setupShowOperation()
 {
     CRUD::set('show.view', 'vendor.backpack.crud.order_preview');
 }
-
 }

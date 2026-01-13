@@ -7,145 +7,104 @@
     <h3 class="mb-4">👤 My Profile</h3>
 
     @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+        <div class="alert alert-success alert-dismissible fade show">{{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     @endif
 
-    <div class="card shadow">
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show">{{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+
+    {{-- Profile Details Form --}}
+    <div class="card shadow mb-5">
         <div class="card-body">
-
-        <form action="{{ route('profile.update') }}" method="POST" id="profileForm">
-            @csrf
-
-            <div class="row g-3">
-
-                <div class="col-md-6">
-                    <label>Name</label>
-                    <input type="text" class="form-control"
-                        value="{{ $user->name }}" disabled>
+            <form action="{{ route('profile.update') }}" method="POST">
+                @csrf
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" value="{{ $user->name }}" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" value="{{ $user->email }}" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Phone</label>
+                        <input type="text" name="phone" class="form-control" value="{{ $detail->phone ?? '' }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Pincode</label>
+                        <input type="text" name="pincode" class="form-control" value="{{ $detail->pincode ?? '' }}">
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Address</label>
+                        <textarea name="address" class="form-control" rows="2">{{ $detail->address ?? '' }}</textarea>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">City</label>
+                        <input type="text" name="city" class="form-control" value="{{ $detail->city ?? '' }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">State</label>
+                        <input type="text" name="state" class="form-control" value="{{ $detail->state ?? '' }}">
+                    </div>
                 </div>
-
-                <div class="col-md-6">
-                    <label>Email</label>
-                    <input type="email" class="form-control"
-                        value="{{ $user->email }}" disabled>
-                </div>
-
-                <div class="col-md-6">
-                    <label>Phone</label>
-                    <input type="text" name="phone" id="phone"
-                        class="form-control"
-                        value="{{ $detail->phone ?? '' }}">
-                    <small class="text-danger" id="phoneError"></small>
-                </div>
-
-                <div class="col-md-6">
-                    <label>Pincode</label>
-                    <input type="text" name="pincode" id="pincode"
-                        class="form-control"
-                        value="{{ $detail->pincode ?? '' }}">
-                    <small class="text-danger" id="pincodeError"></small>
-                </div>
-
-                <div class="col-md-12">
-                    <label>Address</label>
-                    <textarea name="address" id="address"
-                            class="form-control"
-                            rows="2">{{ $detail->address ?? '' }}</textarea>
-                    <small class="text-danger" id="addressError"></small>
-                </div>
-
-                <div class="col-md-6">
-                    <label>City</label>
-                    <input type="text" name="city" id="city"
-                        class="form-control"
-                        value="{{ $detail->city ?? '' }}">
-                    <small class="text-danger" id="cityError"></small>
-                </div>
-
-                <div class="col-md-6">
-                    <label>State</label>
-                    <input type="text" name="state" id="state"
-                        class="form-control"
-                        value="{{ $detail->state ?? '' }}">
-                    <small class="text-danger" id="stateError"></small>
-                </div>
-
-            </div>
-
-            <button class="btn btn-primary mt-4">Save Details</button>
-        </form>
-
-
+                <button class="btn btn-primary mt-4">Save Details</button>
+            </form>
         </div>
     </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5>My Addresses</h5>
+        <a href="{{ route('address.create') }}" class="btn btn-success btn-sm">+ Add Address</a>
+    </div>
+
+   @if($addresses->isEmpty())
+    <div class="alert alert-warning">No addresses found.</div>
+@else
+    <div class="row">
+        @foreach($addresses as $addr)
+        <div class="col-12 col-sm-6 col-md-4 mb-3">
+            <div class="card h-100 shadow-sm position-relative">
+                {{-- Default badge in top-right corner --}}
+                @if($addr->is_default)
+                    <span class="badge bg-success position-absolute" 
+                          style="top: 10px; right: 10px; z-index: 10;">
+                        Default
+                    </span>
+                @endif
+
+                <div class="card-body d-flex flex-column">
+                    <h6 class="card-title">{{ $addr->full_name }}</h6>
+                    <p class="mb-1"><strong>Phone:</strong> {{ $addr->phone }}</p>
+                    <p class="mb-1">{{ $addr->address }}, {{ $addr->city }}, {{ $addr->state }} - {{ $addr->pincode }}</p>
+
+                    <div class="mt-auto d-flex gap-2">
+                        <a href="{{ route('address.edit', $addr->id) }}" class="btn btn-sm btn-primary w-50">Edit</a>
+
+                        <form action="{{ route('address.destroy', $addr->id) }}" method="POST" class="w-50"
+                            onsubmit="return confirm('Are you sure you want to delete this address?')">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-sm btn-danger w-100">Delete</button>
+                        </form>
+                    </div>
+
+                    @if(!$addr->is_default)
+                    <a href="{{ route('address.default', $addr->id) }}" class="btn btn-sm btn-outline-success mt-2 w-100">
+                        Set as Default
+                    </a>
+                    @endif
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+@endif
+
 </div>
-<script>
-$(document).ready(function () {
-
-    $('#profileForm').submit(function (e) {
-        let valid = true;
-
-        // clear old errors
-        $('small.text-danger').text('');
-        $('.form-control').removeClass('is-invalid');
-
-        let phone   = $('#phone').val().trim();
-        let pincode = $('#pincode').val().trim();
-        let address = $('#address').val().trim();
-        let city    = $('#city').val().trim();
-        let state   = $('#state').val().trim();
-
-        // Phone (10 digits)
-        if (phone === '') {
-            $('#phoneError').text('Phone number is required');
-            $('#phone').addClass('is-invalid');
-            valid = false;
-        } else if (!/^[0-9]{10}$/.test(phone)) {
-            $('#phoneError').text('Enter valid 10 digit phone number');
-            $('#phone').addClass('is-invalid');
-            valid = false;
-        }
-
-        // Pincode
-        if (pincode === '') {
-            $('#pincodeError').text('Pincode is required');
-            $('#pincode').addClass('is-invalid');
-            valid = false;
-        } else if (!/^[0-9]{6}$/.test(pincode)) {
-            $('#pincodeError').text('Enter valid 6 digit pincode');
-            $('#pincode').addClass('is-invalid');
-            valid = false;
-        }
-
-        // Address
-        if (address === '') {
-            $('#addressError').text('Address is required');
-            $('#address').addClass('is-invalid');
-            valid = false;
-        }
-
-        // City
-        if (city === '') {
-            $('#cityError').text('City is required');
-            $('#city').addClass('is-invalid');
-            valid = false;
-        }
-
-        // State
-        if (state === '') {
-            $('#stateError').text('State is required');
-            $('#state').addClass('is-invalid');
-            valid = false;
-        }
-
-        if (!valid) {
-            e.preventDefault();
-        }
-    });
-
-});
-</script>
-
 @endsection

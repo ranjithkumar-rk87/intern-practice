@@ -3,7 +3,7 @@
 @section('title', 'My Orders')
 
 @section('content')
-
+<div class="container">
 <h3 class="mb-3">📦 My Orders</h3>
 
 @if(session('success'))
@@ -81,6 +81,6 @@
         @endforeach
     </tbody>
 </table>
-
+</div>
 @endif
 @endsection

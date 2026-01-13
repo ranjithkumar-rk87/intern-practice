@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Cart;
+use App\Models\Address;
 class OrderController extends Controller
 {
     public function index()
@@ -41,22 +42,26 @@ class OrderController extends Controller
             ->where('user_id', Auth::id())
             ->get();
 
+        $addresses = Address::where('user_id', auth()->id())->get();
+
+         foreach ($addresses as $address) {
+            $address->is_deliverable = \App\Models\Pincode::where('pincode', $address->pincode)
+                ->where('is_active', 1)
+                ->exists();
+        }
+
         if ($cartItems->isEmpty()) {
             return redirect()->route('cart')
                 ->with('error', 'Your cart is empty');
         }
 
-        return view('user.checkout', compact('cartItems'));
+        return view('user.checkout', compact('cartItems','addresses'));
     }
     public function placeorder(Request $request)
     {
 
          $request->validate([
-            'phone'          => 'required|digits:10',
-            'address'        => 'required|string',
-            'city'           => 'required|string',
-            'state'          => 'required|string',
-            'pincode'        => 'required|digits:6',
+            'selected_address' => 'required|exists:addresses,id',
             'payment_method' => 'required|in:cod,online',
         ]);
 
@@ -86,16 +91,20 @@ class OrderController extends Controller
             $totalAmount += $item->product->price * $item->quantity;
         }
 
+        $address = Address::where('id', $request->selected_address)
+                ->where('user_id', Auth::id())
+                ->firstOrFail();
         // Create order
         $order = Order::create([
             'user_id' => Auth::id(),
+            'address_id'     => $address->id,
+            'phone'          => $address->phone,
+            'address'        => $address->address,
+            'city'           => $address->city,
+            'state'          => $address->state,
+            'pincode'        => $address->pincode,
             'total_amount' => $totalAmount,
             'status' => 'pending',
-            'phone'          => $request->phone,
-            'address'        => $request->address,
-            'city'           => $request->city,
-            'state'          => $request->state,
-            'pincode'        => $request->pincode,
             'payment_method' => $request->payment_method,
         ]);
 
@@ -114,8 +123,9 @@ class OrderController extends Controller
         // Clear cart
         Auth::user()->carts()->delete();
 
-        return redirect()->route('orders.show', $order->id)
-            ->with('success', 'Order placed successfully');
+        // return redirect()->route('orders.show', $order->id)
+        //     ->with('success', 'Order placed successfully');
+        return redirect()->route('orderstatus')->with('success','Order Placed Successfully');
     }
     public function usershow($id)
     {
@@ -125,6 +135,11 @@ class OrderController extends Controller
             ->firstOrFail();
 
         return view('user.ordershow', compact('order'));
+    }
+     public function orderStatus(Request $request)
+    {
+        $successMessage = $request->session()->get('success');
+        return view('user.order_status', compact('successMessage'));
     }
 
 
@@ -169,6 +184,12 @@ class OrderController extends Controller
 
         if ($order->status !== 'pending') {
             return back()->with('error', 'Order cannot be cancelled');
+        }
+        foreach ($order->items as $item) {
+            $product = $item->product;
+            if ($product) {
+                $product->increment('stock', $item->quantity);
+            }
         }
         
         $order->items()->delete();

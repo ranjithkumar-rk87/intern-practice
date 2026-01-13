@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="row justify-content-center">
-    <div class="col-md-5">
+    <div class="col-12 col-sm-8 col-md-5 col-lg-5">
         <div class="card shadow">
             <div class="card-header bg-success text-white text-center">
                 <h4>Login</h4>
@@ -39,13 +39,13 @@
                     <div class="mb-3">
                         <label>Email</label>
                         <input type="email" name="email" id="email" class="form-control">
-                        <small class="text-danger" id="emailError"></small>
+                        <p class="text-danger" id="emailError"></p>
                     </div>
 
                     <div class="mb-3">
                         <label>Password</label>
                         <input type="password" name="password" id="password" class="form-control">
-                        <small class="text-danger" id="passwordError"></small>
+                        <p class="text-danger" id="passwordError"></p>
                     </div>
 
                     <div class="text-end mb-3">
@@ -92,11 +92,14 @@ $(document).ready(function () {
             $('#passwordError').text('Password is required');
             $('#password').addClass('is-invalid');
             isValid = false;
-        } else if (password.length < 8) {
-            $('#passwordError').text('Password must be at least 8 characters');
-            $('#password').addClass('is-invalid');
-            isValid = false;
         }
+        // else if (!validatePassword(password)) {
+        //     $('#passwordError').text(
+        //         'Password must be at least 8 characters and include uppercase, lowercase, number, and special character'
+        //     );
+        //     $('#password').addClass('is-invalid');
+        //     isValid = false;
+        // }
 
         if (!isValid) {
             e.preventDefault();
@@ -106,6 +109,10 @@ $(document).ready(function () {
     function validateEmail(email) {
         let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return regex.test(email);
+    }
+      function validatePassword(password) {
+        let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        return regex.test(password);
     }
 
 });

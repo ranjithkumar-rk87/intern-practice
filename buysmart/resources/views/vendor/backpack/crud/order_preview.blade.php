@@ -57,7 +57,7 @@
                             <td class="text-center">
                                 @if($item->product && $item->product->image)
                                     <img src="{{ asset('storage/'.$item->product->image) }}"
-                                         class="product-thumb" style="max-width:60px;">
+                                         class="product-thumb">
                                 @else
                                     <span>—</span>
                                 @endif

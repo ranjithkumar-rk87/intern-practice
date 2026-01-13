@@ -15,6 +15,12 @@ use App\Http\Controllers\ProductQuestionController;
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [UserController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [UserController::class, 'update'])->name('profile.update');
+    Route::get('/address/create', function() {return view('user.address_create');})->name('address.create');
+    Route::post('/address/store', [UserController::class, 'storeAddress'])->name('address.store');
+    Route::get('/address/{address}/edit', [UserController::class, 'editAddress'])->name('address.edit');
+    Route::put('/address/{address}', [UserController::class, 'updateAddress'])->name('address.update');
+    Route::delete('/address/{address}', [UserController::class, 'destroyAddress'])->name('address.destroy');
+    Route::get('/address/{address}/default', [UserController::class, 'setDefaultAddress'])->name('address.default');
 });
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('products.show');
@@ -50,6 +56,8 @@ Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name(
 Route::get('/reset-password/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'reset'])->name('password.update');
 
+
+ Route::post('/address/save', [DeliveryController::class, 'saveAddress'])->name('address.save');
 
 Route::middleware('auth')->group(function () {
                                     // change /admin/dashboard
@@ -87,7 +95,7 @@ Route::post('/checkout/place-order', [OrderController::class, 'placeorder'])->na
 Route::get('/buy-now/{id}', [OrderController::class, 'buyNow'])->name('buy.now');
 Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
 Route::get('/quantity/{product}', [OrderController::class, 'updateQty'])->name('quantity.update');
-
+Route::get('/orderstatus', [OrderController::class, 'orderStatus'])->name('orderstatus');
 });
 
 Route::middleware('auth','role:admin')->group(function () {

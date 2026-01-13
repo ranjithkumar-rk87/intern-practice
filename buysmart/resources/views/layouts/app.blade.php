@@ -12,7 +12,6 @@
       integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4IhKqH+P+8a4dK2Z2Y1Q=="
       crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
 </head>
 <body class="bg-light">
 
@@ -115,7 +114,7 @@
     </div>
 </nav>
 
-<div class="container mt-5">
+<div class=" mt-5">
     @yield('content')
 </div>
 
@@ -124,22 +123,11 @@
     <div class="container text-md-left">
         <div class="row text-md-left">
 
-            <!-- About Section -->
             <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                 <h5 class="text-uppercase mb-4 font-weight-bold text-warning">BuySmart</h5>
                 <p>Your one-stop e-commerce platform to buy smartly! We offer the best products at unbeatable prices with fast delivery.</p>
             </div>
 
-            <!-- Quick Links -->
-            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Quick Links</h5>
-                <p><a href="/" class="text-white text-decoration-none">Home</a></p>
-                <p><a href="{{ route('products.index') }}" class="text-white text-decoration-none">Products</a></p>
-                <p><a href="{{ route('cart') }}" class="text-white text-decoration-none">Cart</a></p>
-                <p><a href="{{ route('orders.index') }}" class="text-white text-decoration-none">Orders</a></p>
-            </div>
-
-            <!-- Contact Info -->
             <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
                 <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact</h5>
                 <p><i class="fas fa-home mr-3"></i> Virudhunager</p>
@@ -152,7 +140,6 @@
 
         <hr class="mb-4">
 
-        <!-- Social Media -->
         <div class="row align-items-center">
             <div class="col-md-7 col-lg-8">
                 <p>© 2026 BuySmart. All rights reserved.</p>

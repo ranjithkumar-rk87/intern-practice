@@ -20,7 +20,13 @@ class Product extends Model
         'price',
         'stock',
         'image',
+        'specifications',
     ];
+
+    protected $attributes = [
+        'specifications' => '[]',
+    ];
+
       public function carts()
     {
         return $this->hasMany(Cart::class);
@@ -51,6 +57,7 @@ class Product extends Model
                 $this->attributes['image'] = $path;
             }
         }
+
 
 }
 

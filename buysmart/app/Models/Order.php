@@ -10,6 +10,7 @@ class Order extends Model
     use CrudTrait;
     protected $fillable = [
         'user_id',
+        'address_id',
         'total_amount',
         'status',
         'phone',
@@ -29,5 +30,14 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+//     public function address()
+// {
+//     return $this->belongsTo(Address::class);
+// }
+ public function deliveryAddress()
+    {
+        return $this->belongsTo(Address::class, 'address_id');
+    }
+
 }
 
