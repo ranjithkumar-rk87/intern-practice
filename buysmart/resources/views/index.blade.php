@@ -35,6 +35,15 @@
             </h6>
         @endif
 
+        @if(request('search') && $products->isEmpty())
+            <div class="text-center">
+                <img src="{{ asset('images/common/no_search.png') }}"
+                     alt="No products found"
+                     class="img-fluid mb-3">
+                <h5 class=" text-muted">No products found</h5>
+            </div>
+        @endif
+
         @foreach($products as $product)
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="card border rounded h-100 shadow">

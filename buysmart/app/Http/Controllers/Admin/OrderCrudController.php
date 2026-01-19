@@ -93,7 +93,7 @@ class OrderCrudController extends CrudController
         'user_id' => 'required|exists:users,id',
         'address_id' => 'required|exists:addresses,id',
         'total_amount' => 'required|numeric',
-        'status' => 'required|in:pending,completed,cancelled',
+        'status' => 'required|in:pending,confirmed,delivered',
         'payment_method' => 'required|in:cod,online',
     ]);
 
@@ -128,7 +128,7 @@ class OrderCrudController extends CrudController
         'type' => 'select_from_array',
         'options' => [
             'pending' => 'Pending',
-            'completed' => 'Completed',
+            'confirmed' => 'Confirmed',
             'delivered' => 'Delivered',
         ],
         'default' => 'pending',

@@ -1,3 +1,22 @@
+:root{
+    --bs-black:black;
+    --bs-yellow: #ffc107;
+
+
+}
+.btn-primary{
+    --bs-btn-color: var(--bs-black);
+    --bs-btn-bg: var(--bs-yellow);
+    --bs-btn-border-color: var(--bs-yellow);
+
+    --bs-btn-hover-color: var(--bs-black);
+    --bs-btn-hover-bg: var(--bs-yellow);
+    --bs-btn-hover-border-color: var(--bs-yellow);
+}
+
+
+
+
 .cursor-pointer {
     cursor: pointer;
 }

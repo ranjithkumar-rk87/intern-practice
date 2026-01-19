@@ -96,6 +96,8 @@ Route::get('/buy-now/{id}', [OrderController::class, 'buyNow'])->name('buy.now')
 Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
 Route::get('/quantity/{product}', [OrderController::class, 'updateQty'])->name('quantity.update');
 Route::get('/orderstatus', [OrderController::class, 'orderStatus'])->name('orderstatus');
+Route::get('/orders/{order}/track', [OrderController::class, 'track'])->name('orders.track');
+
 });
 
 Route::middleware('auth','role:admin')->group(function () {

@@ -60,6 +60,8 @@
 <script>
 $(document).ready(function() {
     $('form').on('submit', function(e) {
+        e.preventDefault();
+
         let isValid = true;
         let errorMessages = [];
         $('input, textarea').removeClass('is-invalid');
@@ -122,9 +124,8 @@ $(document).ready(function() {
             $('input[name="pincode"]').addClass('is-invalid')
                 .after('<div class="invalid-feedback">Enter a valid 6-digit pincode.</div>');
         }
-
-        if(!isValid) {
-            e.preventDefault();
+        if (isValid) {
+            this.submit();
         }
     });
 });

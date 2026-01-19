@@ -20,7 +20,7 @@
         @foreach($items as $item)
         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="card border rounded h-100 mb-3">
-                <img src="{{ asset('storage/'.$item->product->image) }}" class="card-img-top  img-fluid" alt="{{ $item->product->name }}">
+                <img src="{{ asset('storage/'.$item->product->image) }}" class="card-img-top img-fluid" alt="{{ $item->product->name }}">
                 <div class="card-body text-center">
                     <h6>{{ $item->product->name }}</h6>
 

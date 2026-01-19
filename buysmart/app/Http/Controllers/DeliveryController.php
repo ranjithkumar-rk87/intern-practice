@@ -45,7 +45,6 @@ class DeliveryController extends Controller
             'pincode' => 'required|digits:6',
         ]);
 
-        // Save address for authenticated user
         $address = auth()->user()->addresses()->create($request->all());
 
         return response()->json([

@@ -63,6 +63,12 @@
                    class="btn btn-sm btn-primary">
                     View
                 </a>
+                @if(in_array($order->status, ['confirmed', 'delivered']))
+                    <a href="{{ route('orders.track', $order->id) }}"
+                    class="btn btn-sm btn-success">
+                        Track
+                    </a>
+                @endif
 
                 @if($order->status === 'pending')
                     <form action="{{ route('orders.destroy', $order->id) }}"

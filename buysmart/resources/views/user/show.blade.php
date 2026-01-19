@@ -206,7 +206,6 @@
         <div class="col-12">
             <h3>Product Reviews</h3>
 
-            {{-- Average Rating --}}
             <div class="mb-3">
                 <strong>Average Rating:</strong>
                 @php $avg = $product->averageRating(); @endphp
@@ -220,7 +219,6 @@
                 ({{ number_format($avg, 1) }})
             </div>
 
-            {{-- List Reviews --}}
             <div class="mb-4">
                 @forelse($product->reviews as $review)
                     <div class="mb-3 border-bottom pb-2">
@@ -305,7 +303,7 @@
         </div>
 
         @foreach($relatedProducts as $related)
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 mb-4">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
             <div class="card  border rounded h-100 shadow-sm">
                 <a href="{{ route('products.show', $related->id) }}">
                     <img src="{{ asset('storage/'.$related->image) }}"

@@ -6,8 +6,8 @@
 <div class="row justify-content-center">
     <div class="col-12 col-sm-8 col-md-6 col-lg-5">
         <div class="card shadow">
-            <div class="card-header bg-success text-white text-center">
-                <h4>Register</h4>
+            <div class="card-header bg-success text-center">
+                <h4 class="text-white">Register</h4>
             </div>
 
             <div class="card-body">
@@ -119,6 +119,7 @@ $(document).ready(function () {
         if (!valid) {
             e.preventDefault();
         }
+        
     });
 
     function validateEmail(email) {

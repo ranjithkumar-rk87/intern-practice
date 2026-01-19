@@ -198,4 +198,8 @@ class OrderController extends Controller
 
         return back()->with('success', 'Order cancelled successfully');
     }
+    public function track(Order $order)
+{
+    return view('user.order_track', compact('order'));
+}
 }

@@ -85,7 +85,7 @@ class ProductCrudController extends CrudController
                     return '<span class="badge bg-danger text-white">Out of Stock</span>';
                 }
 
-                return '<span class="badge bg-success">'.$entry->stock.'</span>';
+                return '<span class="badge bg-primary text-white">'.$entry->stock.'</span>';
             },
             'escaped' => false,
         ]);
@@ -138,15 +138,15 @@ class ProductCrudController extends CrudController
                     json_encode($specs, JSON_PRETTY_PRINT);
             }
         }
-        CRUD::addField([
-    'name'  => 'specifications',
-    'label' => 'Specifications (JSON)',
-    'type'  => 'textarea',
-    'attributes' => [
-        'rows' => 12,
-    ],
-    'hint' => 'Enter valid JSON only',
-]);
+            CRUD::addField([
+                'name'  => 'specifications',
+                'label' => 'Specifications (JSON)',
+                'type'  => 'textarea',
+                'attributes' => [
+                    'rows' => 12,
+                ],
+                'hint' => 'Enter valid JSON only',
+            ]);
 
 
         CRUD::addField([

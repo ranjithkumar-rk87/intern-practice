@@ -6,8 +6,8 @@
 <div class="row justify-content-center">
     <div class="col-12 col-sm-8 col-md-6 col-lg-5">
         <div class="card shadow">
-            <div class="card-header bg-success text-white text-center">
-                <h4>Reset Password</h4>
+            <div class="card-header bg-success text-center">
+                <h4 class="text-white">Reset Password</h4>
             </div>
 
             <div class="card-body">
