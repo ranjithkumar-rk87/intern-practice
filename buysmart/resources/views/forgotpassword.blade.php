@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="row justify-content-center">
-    <div class="col-md-5">
+    <div class="col-12 col-sm-10 col-md-6 col-lg-5 col-xl-4">
         <div class="card shadow">
             <div class="card-header bg-success  text-center">
                 <h4 class="text-white">Forgot Password</h4>

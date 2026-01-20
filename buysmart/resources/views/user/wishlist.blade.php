@@ -13,14 +13,19 @@
     @endif
 
     @if($items->isEmpty())
-        <p>No items in wishlist.</p>
+        <div class="alert alert-warning text-center">
+                No items in wishlist.
+        </div>
+         <div class="text-center">
+                <a href="/" class="btn btn-primary">Continue Shopping</a>
+        </div>
     @endif
 
     <div class="row">
         @foreach($items as $item)
         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="card border rounded h-100 mb-3">
-                <img src="{{ asset('storage/'.$item->product->image) }}" class="card-img-top img-fluid" alt="{{ $item->product->name }}">
+                <img src="{{ asset('storage/'.$item->product->image) }}" class="card-img-top img-fluid height-100" alt="{{ $item->product->name }}">
                 <div class="card-body text-center">
                     <h6>{{ $item->product->name }}</h6>
 

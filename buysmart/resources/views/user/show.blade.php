@@ -330,7 +330,28 @@
     </div>
     @endif
 
-
+<button type="button" 
+        class="btn btn-success btn-lg rounded-circle position-fixed bottom-0 end-0 m-4 d-none"
+        id="backToTopBtn">
+    ↑
+</button>
 
 </div>
+
+<script>
+    const backToTopBtn = document.getElementById("backToTopBtn");
+
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.remove("d-none");
+        } else {
+            backToTopBtn.classList.add("d-none");
+        }
+    });
+
+    backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+</script>
+
 @endsection

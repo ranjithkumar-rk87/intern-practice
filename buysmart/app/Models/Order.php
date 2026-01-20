@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
-    use CrudTrait;
+    use CrudTrait,SoftDeletes;
     protected $fillable = [
         'user_id',
         'address_id',
@@ -38,6 +38,11 @@ class Order extends Model
     {
         return $this->belongsTo(Address::class, 'address_id');
     }
+    public function histories()
+    {
+        return $this->hasMany(OrderHistory::class);
+    }
+
 
 }
 

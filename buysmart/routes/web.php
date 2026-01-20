@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\ProductQuestionController;
+use App\Http\Controllers\OrderHistoryController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [UserController::class, 'edit'])->name('profile.edit');
@@ -99,7 +100,11 @@ Route::get('/orderstatus', [OrderController::class, 'orderStatus'])->name('order
 Route::get('/orders/{order}/track', [OrderController::class, 'track'])->name('orders.track');
 
 });
+Route::middleware('auth','role:user')->group(function () {
+    Route::get('/history', [OrderHistoryController::class, 'index'])->name('history.index');
+    Route::get('/history/{id}', [OrderHistoryController::class, 'historyshow'])->name('history.show');
 
+});
 Route::middleware('auth','role:admin')->group(function () {
 
 Route::get('/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');

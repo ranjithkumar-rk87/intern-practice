@@ -9,7 +9,6 @@
 
         <h3 class="mb-4 text-center text-md-start">🛒 My Cart</h3>
 
-        {{-- Success Message --}}
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show">
                 {{ session('success') }}
@@ -17,7 +16,6 @@
             </div>
         @endif
 
-        {{-- Error Message --}}
         @if(session('error'))
             <div class="alert alert-danger alert-dismissible fade show">
                 {{ session('error') }}
@@ -25,7 +23,6 @@
             </div>
         @endif
 
-        {{-- Empty Cart --}}
         @if($cartItems->isEmpty())
             <div class="alert alert-warning text-center">
                 Your cart is empty
@@ -77,7 +74,7 @@
                                             <input type="text"
                                                 value="{{ $item->quantity }}"
                                                 readonly
-                                                class="qty text-center" style="width:40px;">
+                                                class="qty text-center width-40">
 
                                             <button type="submit" name="action" value="increase"
                                                     class="btn btn-outline-secondary btn-sm">+</button>

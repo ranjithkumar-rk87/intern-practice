@@ -21,7 +21,12 @@
 @endif
 
 @if($orders->isEmpty())
-    <div class="alert alert-warning">No orders found</div>
+    <div class="alert alert-warning text-center">
+                No orders found
+    </div>
+    <div class="text-center">
+            <a href="/" class="btn btn-primary">Continue Shopping</a>
+    </div>
 @else
 
 <table class="table table-bordered align-middle text-center">

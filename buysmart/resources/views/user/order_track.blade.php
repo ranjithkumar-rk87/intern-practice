@@ -13,11 +13,9 @@
         </a>
     </div>
 
-    {{-- Order Card --}}
     <div class="card shadow-sm">
         <div class="card-body">
 
-            {{-- Status --}}
             <div class="mb-3">
                 <strong>Status:</strong>
                 <span class="badge 
@@ -42,17 +40,17 @@
                 $progress = ($currentStep / $totalSteps) * 100;
             @endphp
 
-            {{-- Progress Bar --}}
             <div class="progress mb-4">
-                <div
-                    class="progress-bar bg-success"
-                    role="progressbar"
-                    style="width: {{ $progress }}%"
-                    aria-valuenow="{{ $progress }}"
-                    aria-valuemin="0"
-                    aria-valuemax="100">
-                </div>
+            <div
+                class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                role="progressbar"
+                style="width: 0; transition: width 1s ease-in-out;"
+                aria-valuenow="{{ $progress }}"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                id="orderProgressBar">
             </div>
+        </div>
 
             <div class="row text-center small fw-semibold mb-4">
                 @foreach($steps as $key => $label)
@@ -102,4 +100,12 @@
     </div>
 
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const progressBar = document.getElementById('orderProgressBar');
+        setTimeout(() => {
+            progressBar.style.width = "{{ $progress }}%";
+        }, 100);
+    });
+</script>
 @endsection
