@@ -9,12 +9,64 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function index()
+    private function categories()
     {
-        $products = Product::latest()->get();
-        return view('index', compact('products'));
+        return Product::select('category_name')
+            ->distinct()
+            ->pluck('category_name');
     }
-     public function search(Request $request)
+
+    public function index(Request $request)
+    {
+
+        $query = Product::query();
+
+        if ($request->has('sort')) {
+            switch ($request->sort) {
+                case 'name_asc':
+                    $query->orderBy('name', 'asc');
+                    break;
+                case 'name_desc':
+                    $query->orderBy('name', 'desc');
+                    break;
+                case 'price_asc':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'price_desc':
+                    $query->orderBy('price', 'desc');
+                    break;
+                case 'newest':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+                case 'oldest':
+                    $query->orderBy('created_at', 'asc');
+                    break;
+                default:
+                    $query->latest();
+            }
+        } else {
+            $query->latest();
+        }
+
+        $products = $query->get();
+
+        return view('index', [
+            'products'   => $products,
+            'categories' => $this->categories(),
+        ]);
+    }
+      public function category($category)
+    {
+        $products = Product::where('category_name', $category)->get();
+
+        return view('index', [
+            'products'   => $products,
+            'categories' => $this->categories(),
+            'category'   => $category,
+        ]);
+    }
+
+    public function search(Request $request)
     {
         $request->validate([
             'search' => 'nullable|string|max:255'
@@ -25,7 +77,10 @@ class ProductController extends Controller
             ->latest()
             ->get();
 
-        return view('index', compact('products'));
+        return view('index', [
+            'products'   => $products,
+            'categories' => $this->categories(),
+        ]);
     }
 
     public function create()

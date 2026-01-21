@@ -27,7 +27,7 @@ Route::get('/', [ProductController::class, 'index'])->name('products.index');
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('products.show');
 Route::post('/product/{product}/review', [ProductController::class, 'storeReview'])->name('product.review.store');
 Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
-
+Route::get('/products/category/{category}', [ProductController::class, 'category'])->name('products.category');
 Route::middleware('auth','role:admin')->group(function () {
 Route::get('/create', [ProductController::class, 'create'])->name('admin.products.create');
 Route::post('/store', [ProductController::class, 'store'])->name('products.store');

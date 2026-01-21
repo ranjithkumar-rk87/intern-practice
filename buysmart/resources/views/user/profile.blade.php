@@ -18,7 +18,6 @@
         </div>
     @endif
 
-    {{-- Profile Details Form --}}
     <div class="card shadow mb-5">
         <div class="card-body">
             <form action="{{ route('profile.update') }}" method="POST">
@@ -70,10 +69,8 @@
         @foreach($addresses as $addr)
         <div class="col-12 col-sm-6 col-md-4 mb-3">
             <div class="card h-100 shadow-sm position-relative">
-                {{-- Default badge in top-right corner --}}
                 @if($addr->is_default)
-                    <span class="badge bg-success position-absolute" 
-                          style="top: 10px; right: 10px; z-index: 10;">
+                    <span class="badge bg-success position-absolute default-address">
                         Default
                     </span>
                 @endif

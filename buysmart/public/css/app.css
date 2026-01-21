@@ -69,3 +69,8 @@
     height: 500px;
     overflow: hidden;
 }
+.default-address{
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
